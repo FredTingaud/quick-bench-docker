@@ -39,15 +39,15 @@ RUN cd /usr/src/ \
     && rm -rf linux
 
 RUN cd /usr/src/ \
-    && wget http://releases.llvm.org/4.0.0/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz -O clang.tar.xz \
+    && wget http://releases.llvm.org/5.0.0/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04.tar.xz -O clang.tar.xz \
     && tar -xf clang.tar.xz \
     && rm clang.tar.xz \
-    && ln -s /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang++ /usr/bin/clang++ \
-    && ln -s /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang /usr/bin/clang
+    && ln -s /usr/src/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04/bin/clang++ /usr/bin/clang++ \
+    && ln -s /usr/src/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04/bin/clang /usr/bin/clang
 
 ENV CC clang
 ENV CXX clang++
-    
+
 RUN cd /usr/src/ \
     && git clone https://github.com/google/benchmark.git \
     && mkdir -p /usr/src/benchmark/build/ \
