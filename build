@@ -1,1 +1,1 @@
-clang++-3.8 $1 bench-file.cpp -o bench /usr/local/lib/libbenchmark.a -lpthread
+clang++ $1 bench-file.cpp -o bench /usr/local/lib/libbenchmark.a -lpthread

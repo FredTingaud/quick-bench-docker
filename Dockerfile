@@ -7,7 +7,6 @@ USER root
 RUN apt-get update && apt-get -y install \
    git \
    cmake \
-   clang-3.8 \
    libfreetype6-dev \
    flex \
    bison \
@@ -15,7 +14,15 @@ RUN apt-get update && apt-get -y install \
    zlib1g-dev \
    libiberty-dev \
    libelf-dev \
-   gcc \
+   libmpc-dev \
+   g++ \
+   curl \
+   xz-utils \
+   wget \
+   software-properties-common \
+   && add-apt-repository ppa:ubuntu-toolchain-r/test \
+   && apt-get update \
+   && apt-get upgrade -y libstdc++6 \
    && rm -rf /var/lib/apt/lists/*
 
 ENV CC gcc
@@ -31,25 +38,36 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
-ENV CC clang-3.8
-ENV CXX clang++-3.8
+RUN cd /usr/src/ \
+    && wget http://releases.llvm.org/4.0.0/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz -O clang.tar.xz \
+    && tar -xf clang.tar.xz \
+    && rm clang.tar.xz \
+    && ln -s /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang++ /usr/bin/clang++ \
+    && ln -s /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang /usr/bin/clang
 
+ENV CC clang
+ENV CXX clang++
+    
 RUN cd /usr/src/ \
     && git clone https://github.com/google/benchmark.git \
     && mkdir -p /usr/src/benchmark/build/ \
     && cd /usr/src/benchmark/build/ \
     && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true .. \
-    && make -j12 \
+    && make -j4 \
     && make install
 
 RUN apt-get autoremove -y git \
-    gcc \
     cmake \
     flex \
     bison \
     binutils-dev \
     zlib1g-dev \
-    libiberty-dev
+    libiberty-dev \
+    curl \
+    xz-utils \
+    wget \
+    software-properties-common
+
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
 
