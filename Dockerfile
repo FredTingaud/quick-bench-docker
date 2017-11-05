@@ -18,8 +18,12 @@ RUN apt-get update && apt-get -y install \
    g++ \
    curl \
    xz-utils \
+   software-properties-common \
    zip \
    unzip \
+   && add-apt-repository ppa:ubuntu-toolchain-r/test \
+   && apt-get update \
+   && apt-get upgrade -y libstdc++6 \
    && rm -rf /var/lib/apt/lists/*
 
 ENV CC gcc
@@ -68,7 +72,8 @@ RUN apt-get autoremove -y git \
     curl \
     xz-utils \
     unzip \
-    zip
+    zip \
+    software-properties-common
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
 
