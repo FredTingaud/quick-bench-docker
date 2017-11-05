@@ -53,6 +53,12 @@ RUN apt-get autoremove -y git \
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
 
+COPY ./annotate /home/builder/annotate
+
+COPY ./build /home/builder/build
+
+COPY ./run /home/builder/run
+
 USER builder
 
 WORKDIR /home/builder
