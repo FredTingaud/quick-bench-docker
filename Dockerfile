@@ -39,11 +39,11 @@ RUN cd /usr/src/ \
     && rm -rf linux
 
 RUN cd /usr/src/ \
-    && wget http://releases.llvm.org/4.0.0/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz -O clang.tar.xz \
+    && wget http://releases.llvm.org/3.9.1/clang+llvm-3.9.1-x86_64-linux-gnu-ubuntu-16.04.tar.xz -O clang.tar.xz \
     && tar -xf clang.tar.xz \
     && rm clang.tar.xz \
-    && ln -s /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang++ /usr/bin/clang++ \
-    && ln -s /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang /usr/bin/clang
+    && ln -s /usr/src/clang+llvm-3.9.1-x86_64-linux-gnu-ubuntu-16.04/bin/clang++ /usr/bin/clang++ \
+    && ln -s /usr/src/clang+llvm-3.9.1-x86_64-linux-gnu-ubuntu-16.04/bin/clang /usr/bin/clang
 
 ENV CC clang
 ENV CXX clang++
