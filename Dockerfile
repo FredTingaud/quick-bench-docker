@@ -42,8 +42,11 @@ RUN cd /usr/src/ \
     && wget http://releases.llvm.org/5.0.0/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04.tar.xz -O clang.tar.xz \
     && tar -xf clang.tar.xz \
     && rm clang.tar.xz \
-    && ln -s /usr/src/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04/bin/clang++ /usr/bin/clang++ \
-    && ln -s /usr/src/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04/bin/clang /usr/bin/clang
+    && mv /usr/src/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04/bin/clang-5.0 /usr/bin/clang \
+    && ln -s /usr/bin/clang /usr/bin/clang++ \
+    && mkdir -p /usr/lib/clang/5.0.0 \
+    && mv /usr/src/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04/lib/clang/5.0.0/include /usr/lib/clang/5.0.0/. \
+    && rm -rf /usr/src/clang*
 
 ENV CC clang
 ENV CXX clang++
