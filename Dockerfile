@@ -42,8 +42,8 @@ RUN cd /usr/src/ \
     && wget http://releases.llvm.org/4.0.0/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz -O clang.tar.xz \
     && tar -xf clang.tar.xz \
     && rm clang.tar.xz \
-    && mv /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-4.0 /usr/bin/clang++ \
-    && ln -s /usr/bin/clang++ /usr/bin/clang \
+    && mv /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-4.0 /usr/bin/clang \
+    && ln -s /usr/bin/clang /usr/bin/clang++ \
     && mkdir -p /usr/lib/clang/4.0.0 \
     && mv /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/lib/clang/4.0.0/include /usr/lib/clang/4.0.0/. \
     && rm -rf /usr/src/clang*
