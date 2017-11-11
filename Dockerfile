@@ -42,8 +42,11 @@ RUN cd /usr/src/ \
     && wget http://releases.llvm.org/3.9.1/clang+llvm-3.9.1-x86_64-linux-gnu-ubuntu-16.04.tar.xz -O clang.tar.xz \
     && tar -xf clang.tar.xz \
     && rm clang.tar.xz \
-    && ln -s /usr/src/clang+llvm-3.9.1-x86_64-linux-gnu-ubuntu-16.04/bin/clang++ /usr/bin/clang++ \
-    && ln -s /usr/src/clang+llvm-3.9.1-x86_64-linux-gnu-ubuntu-16.04/bin/clang /usr/bin/clang
+    && mv /usr/src/clang+llvm-3.9.1-x86_64-linux-gnu-ubuntu-16.04/bin/clang-3.9 /usr/bin/clang \
+    && ln -s /usr/bin/clang /usr/bin/clang++ \
+    && mkdir -p /usr/lib/clang/3.9.1 \
+    && mv /usr/src/clang+llvm-3.9.1-x86_64-linux-gnu-ubuntu-16.04/lib/clang/3.9.1/include /usr/lib/clang/3.9.1/. \
+    && rm -rf /usr/src/clang*
 
 ENV CC clang
 ENV CXX clang++
