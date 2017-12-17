@@ -20,6 +20,7 @@ RUN apt-get update && apt-get -y install \
    xz-utils \
    wget \
    software-properties-common \
+   subversion \
    && add-apt-repository ppa:ubuntu-toolchain-r/test \
    && apt-get update \
    && apt-get upgrade -y libstdc++6 \
@@ -43,7 +44,10 @@ RUN cd /usr/src/ \
     && tar -xf clang.tar.xz \
     && rm clang.tar.xz \
     && mv /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-4.0 /usr/bin/clang \
+    && mv /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/llvm-ar /usr/bin/llvm-ar \
+    && mv /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/llvm-nm /usr/bin/llvm-nm \
     && ln -s /usr/bin/clang /usr/bin/clang++ \
+    && ln -s /usr/bin/llvm-ar /usr/bin/llvm-ranlib \
     && mkdir -p /usr/lib/clang/4.0.0 \
     && mv /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/lib/clang/4.0.0/include /usr/lib/clang/4.0.0/. \
     && rm -rf /usr/src/clang*
@@ -55,9 +59,11 @@ RUN cd /usr/src/ \
     && git clone https://github.com/google/benchmark.git \
     && mkdir -p /usr/src/benchmark/build/ \
     && cd /usr/src/benchmark/build/ \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true .. \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON .. \
     && make -j4 \
     && make install
+
+RUN svn checkout https://github.com/ericniebler/range-v3/tags/0.3.0/include /usr/include
 
 RUN apt-get autoremove -y git \
     cmake \
@@ -69,6 +75,7 @@ RUN apt-get autoremove -y git \
     curl \
     xz-utils \
     wget \
+    subversion \
     software-properties-common
 
 
