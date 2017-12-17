@@ -19,6 +19,9 @@ RUN apt-get update && apt-get -y install \
    curl \
    xz-utils \
    software-properties-common \
+   zip \
+   unzip \
+   subversion \
    && add-apt-repository ppa:ubuntu-toolchain-r/test \
    && apt-get update \
    && apt-get upgrade -y libstdc++6 \
@@ -54,11 +57,15 @@ RUN curl -fSL "http://ftpmirror.gnu.org/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.ta
 
 RUN cd /usr/src/ \
     && git clone https://github.com/google/benchmark.git \
+    && cd /usr/src/benchmark \
+    && git checkout v1.3.0 \
     && mkdir -p /usr/src/benchmark/build/ \
     && cd /usr/src/benchmark/build/ \
     && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true .. -DCMAKE_CXX_FLAGS="-Wno-error=lto-type-mismatch" \
     && make -j4 \
     && make install
+
+RUN svn checkout https://github.com/ericniebler/range-v3/tags/0.3.0/include /usr/include
 
 RUN apt-get autoremove -y git \
     cmake \
@@ -69,6 +76,9 @@ RUN apt-get autoremove -y git \
     libiberty-dev \
     curl \
     xz-utils \
+    unzip \
+    subversion \
+    zip \
     software-properties-common
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
