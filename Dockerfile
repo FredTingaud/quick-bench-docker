@@ -20,6 +20,7 @@ RUN apt-get update && apt-get -y install \
    xz-utils \
    zip \
    unzip \
+   subversion \
    && rm -rf /var/lib/apt/lists/*
 
 ENV CC gcc
@@ -52,11 +53,15 @@ RUN curl -fSL "http://ftpmirror.gnu.org/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.ta
 
 RUN cd /usr/src/ \
     && git clone https://github.com/google/benchmark.git \
+    && cd /usr/src/benchmark \
+    && git checkout v1.3.0 \
     && mkdir -p /usr/src/benchmark/build/ \
     && cd /usr/src/benchmark/build/ \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true .. \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON .. \
     && make -j4 \
     && make install
+
+RUN svn checkout https://github.com/ericniebler/range-v3/tags/0.3.0/include /usr/include
 
 RUN apt-get autoremove -y git \
     cmake \
@@ -68,6 +73,7 @@ RUN apt-get autoremove -y git \
     curl \
     xz-utils \
     unzip \
+    subversion \
     zip
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
