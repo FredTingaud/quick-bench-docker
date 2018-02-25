@@ -40,7 +40,7 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
-ENV GCC_VERSION 7.2.0
+ENV GCC_VERSION 7.3.0
 
 RUN curl -fSL "http://ftpmirror.gnu.org/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz" -o gcc.tar.xz \
     && mkdir -p /usr/src/gcc \
@@ -82,6 +82,8 @@ RUN apt-get autoremove -y git \
     software-properties-common
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
+
+ENV LD_LIBRARY_PATH /usr/local/lib64/
 
 COPY ./annotate /home/builder/annotate
 
