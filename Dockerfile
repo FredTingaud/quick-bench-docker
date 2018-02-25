@@ -55,6 +55,8 @@ RUN curl -fSL "http://ftpmirror.gnu.org/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.ta
     && cd ../.. \
     && rm -rf gcc
 
+ENV LD_LIBRARY_PATH /usr/local/lib64/
+
 RUN cd /usr/src/ \
     && git clone https://github.com/google/benchmark.git \
     && cd /usr/src/benchmark \
