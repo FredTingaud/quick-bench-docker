@@ -39,29 +39,42 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
+ENV CLANG_RELEASE release_40
+
 RUN cd /usr/src/ \
-    && wget http://releases.llvm.org/4.0.0/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz -O clang.tar.xz \
-    && tar -xf clang.tar.xz \
-    && rm clang.tar.xz \
-    && mv /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-4.0 /usr/bin/clang \
-    && mv /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/llvm-ar /usr/bin/llvm-ar \
-    && mv /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/llvm-nm /usr/bin/llvm-nm \
-    && ln -s /usr/bin/clang /usr/bin/clang++ \
-    && ln -s /usr/bin/llvm-ar /usr/bin/llvm-ranlib \
-    && mkdir -p /usr/lib/clang/4.0.0 \
-    && mv /usr/src/clang+llvm-4.0.0-x86_64-linux-gnu-ubuntu-16.04/lib/clang/4.0.0/include /usr/lib/clang/4.0.0/. \
-    && rm -rf /usr/src/clang*
+    && svn co "http://llvm.org/svn/llvm-project/llvm/branches/$CLANG_RELEASE" llvm \
+    && cd llvm/tools \
+    && svn co "http://llvm.org/svn/llvm-project/cfe/branches/$CLANG_RELEASE" clang \
+    && cd ../projects \
+    && svn co "http://llvm.org/svn/llvm-project/libcxx/branches/$CLANG_RELEASE" libcxx \
+    && svn co "http://llvm.org/svn/llvm-project/libcxxabi/branches/$CLANG_RELEASE" libcxxabi \
+    && cd .. \
+    && mkdir build \
+    && cd build \
+    && cmake -DCMAKE_BUILD_TYPE=Release .. \
+    && make -j"$(nproc)" \
+    && make install \
+    && make cxx \
+    && make install-cxx install-cxxabi \
+    && cp ../projects/libcxxabi/include/* /usr/local/include/c++/v1/. \
+    && cd ../.. \
+    && rm -rf llvm \
+    && cd /usr/local/bin \
+    && rm clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld
 
 ENV CC clang
 ENV CXX clang++
-    
+
 RUN cd /usr/src/ \
     && git clone https://github.com/google/benchmark.git \
     && mkdir -p /usr/src/benchmark/build/ \
     && cd /usr/src/benchmark/build/ \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON .. \
-    && make -j4 \
-    && make install
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
+    && make -j"$(nproc)" \
+    && make install \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++" -DCMAKE_EXE_LINKER_FLAGS="-lc++abi" -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
+    && make clean all -j"$(nproc)" \
+    && cp src/libbenchmark.a /usr/local/lib/libbenchmark-cxx.a
 
 RUN svn checkout https://github.com/ericniebler/range-v3/tags/0.3.0/include /usr/include
 
@@ -78,7 +91,6 @@ RUN apt-get autoremove -y git \
     subversion \
     software-properties-common
 
-
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
 
 COPY ./annotate /home/builder/annotate
@@ -86,6 +98,8 @@ COPY ./annotate /home/builder/annotate
 COPY ./build /home/builder/build
 
 COPY ./run /home/builder/run
+
+COPY ./build-libcxx /home/builder/build-libcxx
 
 USER builder
 
