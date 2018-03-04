@@ -39,29 +39,52 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
+ENV CLANG_VERSION 5.0.0
+ENV CLANG_NAME clang-5.0
+
 RUN cd /usr/src/ \
-    && wget http://releases.llvm.org/5.0.0/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04.tar.xz -O clang.tar.xz \
+    && wget "http://releases.llvm.org/$CLANG_VERSION/clang+llvm-$CLANG_VERSION-linux-x86_64-ubuntu16.04.tar.xz" -O clang.tar.xz \
     && tar -xf clang.tar.xz \
     && rm clang.tar.xz \
-    && mv /usr/src/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04/bin/clang-5.0 /usr/bin/clang \
-    && mv /usr/src/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04/bin/llvm-ar /usr/bin/llvm-ar \
-    && mv /usr/src/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04/bin/llvm-nm /usr/bin/llvm-nm \
+    && mv "/usr/src/clang+llvm-$CLANG_VERSION-linux-x86_64-ubuntu16.04/bin/$CLANG_NAME" /usr/bin/clang \
+    && mv "/usr/src/clang+llvm-$CLANG_VERSION-linux-x86_64-ubuntu16.04/bin/llvm-ar" /usr/bin/llvm-ar \
+    && mv "/usr/src/clang+llvm-$CLANG_VERSION-linux-x86_64-ubuntu16.04/bin/llvm-nm" /usr/bin/llvm-nm \
     && ln -s /usr/bin/clang /usr/bin/clang++ \
     && ln -s /usr/bin/llvm-ar /usr/bin/llvm-ranlib \
-    && mkdir -p /usr/lib/clang/5.0.0 \
-    && mv /usr/src/clang+llvm-5.0.0-linux-x86_64-ubuntu16.04/lib/clang/5.0.0/include /usr/lib/clang/5.0.0/. \
+    && mkdir -p "/usr/lib/clang/$CLANG_VERSION" \
+    && mv "/usr/src/clang+llvm-$CLANG_VERSION-linux-x86_64-ubuntu16.04/lib/clang/$CLANG_VERSION/include" "/usr/lib/clang/$CLANG_VERSION/." \
     && rm -rf /usr/src/clang*
 
 ENV CC clang
 ENV CXX clang++
 
+ENV CLANG_RELEASE release_50
+
+RUN cd /usr/src/ \
+    && svn co "http://llvm.org/svn/llvm-project/llvm/branches/$CLANG_RELEASE" llvm \
+    && cd llvm/projects \
+    && svn co "http://llvm.org/svn/llvm-project/libcxx/branches/$CLANG_RELEASE" libcxx \
+    && svn co "http://llvm.org/svn/llvm-project/libcxxabi/branches/$CLANG_RELEASE" libcxxabi \
+    && cd .. \
+    && mkdir build \
+    && cd build \
+    && cmake -DCMAKE_BUILD_TYPE=Release .. \
+    && make cxx \
+    && make install-cxx install-cxxabi \
+    && cp ../projects/libcxxabi/include/* /usr/local/include/c++/v1/. \
+    && cd ../.. \
+    && rm -rf llvm
+
 RUN cd /usr/src/ \
     && git clone https://github.com/google/benchmark.git \
     && mkdir -p /usr/src/benchmark/build/ \
     && cd /usr/src/benchmark/build/ \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON .. \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
     && make -j4 \
-    && make install
+    && make install \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++" -DCMAKE_EXE_LINKER_FLAGS="-lc++abi" -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
+    && make clean all -j4 \
+    && cp src/libbenchmark.a /usr/local/lib/libbenchmark-cxx.a
 
 RUN svn checkout https://github.com/ericniebler/range-v3/tags/0.3.0/include /usr/include
 
@@ -86,6 +109,8 @@ COPY ./annotate /home/builder/annotate
 COPY ./build /home/builder/build
 
 COPY ./run /home/builder/run
+
+COPY ./build-libcxx /home/builder/build-libcxx
 
 USER builder
 
