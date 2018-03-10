@@ -39,7 +39,7 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
-ENV CLANG_RELEASE release_40
+ENV CLANG_RELEASE release_60
 
 RUN cd /usr/src/ \
     && svn co "http://llvm.org/svn/llvm-project/llvm/branches/$CLANG_RELEASE" llvm \
