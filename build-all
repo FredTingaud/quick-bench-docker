@@ -1,0 +1,12 @@
+#!/bin/bash
+
+fmt='
+  git checkout %(refname:short) && \
+  docker build -t fredtingaud/quick-bench:%(refname:short) . && \
+  (cd ../quick-bench-back-end; QB_VERSION=%(refname:short) mocha system-test --exit) && \
+  echo "pushing" && \
+  docker push fredtingaud/quick-bench:%(refname:short)
+  '
+
+git for-each-ref --shell --format="$fmt" refs/heads/gcc* | while read entry; do eval "$entry"; done
+git for-each-ref --shell --format="$fmt" refs/heads/clang* | while read entry; do eval "$entry"; done
