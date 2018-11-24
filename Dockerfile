@@ -40,7 +40,7 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
-ENV GCC_VERSION 6.4.0
+ENV GCC_VERSION 6.5.0
 
 RUN curl -fSL "http://ftpmirror.gnu.org/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz" -o gcc.tar.xz \
     && mkdir -p /usr/src/gcc \
