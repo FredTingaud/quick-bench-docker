@@ -39,7 +39,7 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
-ENV CLANG_RELEASE release_60
+ENV CLANG_RELEASE release_70
 
 RUN cd /usr/src/ \
     && svn co "http://llvm.org/svn/llvm-project/llvm/branches/$CLANG_RELEASE" llvm \
@@ -60,7 +60,7 @@ RUN cd /usr/src/ \
     && cd ../.. \
     && rm -rf llvm \
     && cd /usr/local/bin \
-    && rm clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld
+    && rm clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil clang-refactor llvm-exegesis clang-rename clang-func-mapping llvm-cfi-verify
 
 ENV CC clang
 ENV CXX clang++
