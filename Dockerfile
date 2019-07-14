@@ -39,28 +39,25 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
-ENV CLANG_RELEASE release_70
+ENV CLANG_RELEASE llvmorg-7.1.0
 
-RUN cd /usr/src/ \
-    && svn co "http://llvm.org/svn/llvm-project/llvm/branches/$CLANG_RELEASE" llvm \
-    && cd llvm/tools \
-    && svn co "http://llvm.org/svn/llvm-project/cfe/branches/$CLANG_RELEASE" clang \
-    && cd ../projects \
-    && svn co "http://llvm.org/svn/llvm-project/libcxx/branches/$CLANG_RELEASE" libcxx \
-    && svn co "http://llvm.org/svn/llvm-project/libcxxabi/branches/$CLANG_RELEASE" libcxxabi \
-    && cd .. \
+RUN cd /usr/src \
+    && git clone https://github.com/llvm/llvm-project.git \
+    && cd llvm-project \
+    && git checkout $CLANG_RELEASE \
     && mkdir build \
     && cd build \
-    && cmake -DCMAKE_BUILD_TYPE=Release .. \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;libcxx;libcxxabi" ../llvm \
     && make -j"$(nproc)" \
     && make install \
     && make cxx \
     && make install-cxx install-cxxabi \
-    && cp ../projects/libcxxabi/include/* /usr/local/include/c++/v1/. \
+    && cp ../libcxxabi/include/* /usr/local/include/c++/v1/. \
     && cd ../.. \
-    && rm -rf llvm \
+    && rm -rf llvm-project \
     && cd /usr/local/bin \
     && rm clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil clang-refactor llvm-exegesis clang-rename clang-func-mapping llvm-cfi-verify
+
 
 ENV CC clang
 ENV CXX clang++
