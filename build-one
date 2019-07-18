@@ -1,0 +1,17 @@
+#!/bin/bash
+
+show_usage() {
+    echo -e "Usage: $0 branch_name"
+}
+
+if [ "$#" -ne 1 ]; then
+    show_usage
+    exit 1
+fi
+
+git checkout $1 && \
+docker build --no-cache -t fredtingaud/quick-bench:$1 . && \
+(cd ../quick-bench-back-end; QB_VERSION=$1 mocha system-test --exit) && \
+echo "pushing $1" && \
+docker push fredtingaud/quick-bench:$1 && \
+git checkout master
