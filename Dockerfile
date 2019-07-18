@@ -40,9 +40,9 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
-ENV GCC_VERSION 8.3.0
+ENV GCC_VERSION 9.1.0
 
-RUN curl -fSL "http://ftpmirror.gnu.org/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz" -o gcc.tar.xz \
+RUN curl -fSL "https://bigsearcher.com/mirrors/gcc/releases/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz" -o gcc.tar.xz \
     && mkdir -p /usr/src/gcc \
     && tar -xf gcc.tar.xz -C /usr/src/gcc --strip-components=1 \
     && rm gcc.tar.xz* \
