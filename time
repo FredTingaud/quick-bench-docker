@@ -1,0 +1,9 @@
+#!/bin/bash
+
+COUNTER=0
+SECONDS=0
+
+while [[ $COUNTER -lt 10 && $SECONDS -lt 30 ]]; do
+  /usr/bin/time -f "%e" g++ "$@" bench-file.cpp 2>> bench.out
+  let COUNTER=COUNTER+1
+done

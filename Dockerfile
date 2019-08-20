@@ -22,6 +22,7 @@ RUN apt-get update && apt-get -y install \
    zip \
    unzip \
    subversion \
+   time \
    && add-apt-repository ppa:ubuntu-toolchain-r/test \
    && apt-get update \
    && apt-get upgrade -y libstdc++6 \
@@ -90,6 +91,8 @@ COPY ./annotate /home/builder/annotate
 COPY ./build /home/builder/build
 
 COPY ./run /home/builder/run
+
+COPY ./time /home/builder/time-build
 
 USER builder
 
