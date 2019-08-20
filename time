@@ -1,0 +1,15 @@
+#!/bin/bash
+
+COUNTER=0
+SECONDS=0
+# default 60s timeout can be changed with an environment variable
+MAX_TIME="${BB_TIMEOUT:-60}"
+LAST_TIME=0
+LAST_DURATION=0
+
+while [[ $COUNTER -lt 10 && $SECONDS -lt $((MAX_TIME - LAST_DURATION)) ]]; do
+  /usr/bin/time -f "%U\t%M" clang++ "$@" bench-file.cpp 2>> bench.out
+  let COUNTER=COUNTER+1
+  let LAST_DURATION=$SECONDS-$LAST_TIME
+  let LAST_TIME=$SECONDS
+done

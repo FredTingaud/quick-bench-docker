@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 MAINTAINER Fred Tingaud <ftingaud@hotmail.com>
 
@@ -21,6 +21,7 @@ RUN apt-get update && apt-get -y install \
    wget \
    software-properties-common \
    subversion \
+   time \
    && add-apt-repository ppa:ubuntu-toolchain-r/test \
    && apt-get update \
    && apt-get upgrade -y libstdc++6 \
@@ -32,7 +33,7 @@ ENV CXX g++
 RUN cd /usr/src/ \
     && git clone https://github.com/torvalds/linux.git \
     && cd linux \
-    && git checkout tags/v4.9 \
+    && git checkout tags/v5.0 \
     && cd tools/perf \
     && make \
     && cp perf /usr/bin \
@@ -97,6 +98,10 @@ COPY ./build /home/builder/build
 COPY ./run /home/builder/run
 
 COPY ./build-libcxx /home/builder/build-libcxx
+
+COPY ./time /home/builder/time-build
+
+COPY ./time-libcxx /home/builder/time-build-libcxx
 
 USER builder
 
