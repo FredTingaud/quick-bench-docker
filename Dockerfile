@@ -40,7 +40,7 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
-ENV GCC_VERSION 9.1.0
+ENV GCC_VERSION 9.2.0
 
 RUN curl -fSL "https://bigsearcher.com/mirrors/gcc/releases/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz" -o gcc.tar.xz \
     && mkdir -p /usr/src/gcc \
