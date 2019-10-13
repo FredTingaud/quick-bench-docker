@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 MAINTAINER Fred Tingaud <ftingaud@hotmail.com>
 
@@ -32,7 +32,7 @@ ENV CXX g++
 RUN cd /usr/src/ \
     && git clone https://github.com/torvalds/linux.git \
     && cd linux \
-    && git checkout tags/v4.9 \
+    && git checkout tags/v4.14 \
     && cd tools/perf \
     && make \
     && cp perf /usr/bin \
