@@ -13,7 +13,7 @@ RUN apt-get update && apt-get -y install \
    binutils-dev \
    zlib1g-dev \
    libiberty-dev \
-   libelf-dev \
+   libelf1 \
    libmpc-dev \
    g++ \
    curl \
