@@ -53,6 +53,7 @@ RUN cd /usr/src/ \
     && cd .. \
     && mkdir build \
     && cd build \
+    && ln -s /usr/include/locale.h /usr/include/xlocale.h \
     && cmake -DCMAKE_BUILD_TYPE=Release .. \
     && make -j"$(nproc)" \
     && make install \
