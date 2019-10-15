@@ -47,6 +47,13 @@ RUN curl -fSL "http://ftpmirror.gnu.org/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.ta
     && tar -xf gcc.tar.xz -C /usr/src/gcc --strip-components=1 \
     && rm gcc.tar.xz* \
     && cd /usr/src/gcc \
+    && sed -i "s/struct ucontext/ucontext_t/g" libgcc/config/i386/linux-unwind.h \
+    && sed -i "s/struct ucontext/ucontext_t/g" libjava/include/x86_64-signal.h \
+    && sed -i "s/struct sigaltstack/stack_t/g" libsanitizer/sanitizer_common/sanitizer_linux.cc \
+    && sed -i "s/struct sigaltstack\([^;]\)/stack_t\1/g" libsanitizer/sanitizer_common/sanitizer_linux.h \
+    && sed -i "s/#include \"sanitizer_platform_limits_posix\.h\"/#include \"sanitizer_platform_limits_posix\.h\"\n#include \"bits\/types\/stack_t\.h\"/g" libsanitizer/sanitizer_common/sanitizer_linux.h \
+    && sed -i "s/struct sigaltstack/stack_t/g" libsanitizer/sanitizer_common/sanitizer_stoptheworld_linux_libcdep.cc \
+    && sed -i "s/resolv\.h/bits\/types\/res_state\.h/g" libsanitizer/tsan/tsan_platform_linux.cc \
     && mkdir build \
     && cd build \
     && /usr/src/gcc/configure --disable-multilib \
