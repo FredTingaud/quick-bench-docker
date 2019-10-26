@@ -31,7 +31,7 @@ fi
 
 git checkout $1 && \
 docker build $CACHE -t fredtingaud/quick-bench:$1 . && \
-(cd ../quick-bench-back-end; QB_VERSION=$1 mocha system-test --exit) && \
+(cd ../quick-bench-back-end; QB_VERSION=$1 npm run system-test) && \
 echo "pushing $1" && \
 docker push fredtingaud/quick-bench:$1 && \
 git checkout master
