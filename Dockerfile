@@ -22,6 +22,7 @@ RUN apt-get update && apt-get -y install \
    software-properties-common \
    subversion \
    libstdc++-6-dev \
+   binutils \
    && add-apt-repository ppa:ubuntu-toolchain-r/test \
    && apt-get update \
    && rm -rf /var/lib/apt/lists/*
@@ -48,7 +49,6 @@ RUN cd /usr/src/ \
     && cd ../projects \
     && svn co "http://llvm.org/svn/llvm-project/libcxx/branches/$CLANG_RELEASE" libcxx \
     && svn co "http://llvm.org/svn/llvm-project/libcxxabi/branches/$CLANG_RELEASE" libcxxabi \
-    && svn co "http://llvm.org/svn/llvm-project/lld/branches/$CLANG_RELEASE" lld \
     && cd .. \
     && mkdir build \
     && cd build \
@@ -93,8 +93,6 @@ RUN apt-get autoremove -y git \
     subversion \
     software-properties-common \
     g++
-
-RUN ln -s /usr/local/bin/lld /usr/bin/ld
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
 

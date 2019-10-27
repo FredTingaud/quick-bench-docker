@@ -2,4 +2,4 @@ export LD_LIBRARY_PATH=/usr/local/lib
 export CPLUS_INCLUDE_PATH=/usr/local/include/c++/v1
 export C_INCLUDE_PATH=/usr/local/include/c++/v1
 
-clang++ "$@" -fuse-ld=lld -stdlib=libc++ bench-file.cpp -o bench /usr/local/lib/libbenchmark-cxx.a -lpthread -lc++ -lc++abi
+clang++ "$@" -stdlib=libc++ bench-file.cpp -o bench /usr/local/lib/libbenchmark-cxx.a -lpthread -lc++ -lc++abi

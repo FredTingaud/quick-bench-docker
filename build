@@ -1,1 +1,1 @@
-clang++ "$@" -fuse-ld=lld bench-file.cpp -o bench /usr/local/lib/libbenchmark.a -lpthread
+clang++ "$@" bench-file.cpp -o bench /usr/local/lib/libbenchmark.a -lpthread
