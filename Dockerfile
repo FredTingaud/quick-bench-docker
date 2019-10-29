@@ -40,7 +40,7 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
-ENV CLANG_RELEASE llvmorg-7.0.0
+ENV CLANG_RELEASE llvmorg-7.0.1
 
 RUN cd /usr/src \
     && git clone https://github.com/llvm/llvm-project.git \
