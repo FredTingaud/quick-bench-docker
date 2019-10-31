@@ -40,7 +40,7 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
-ENV CLANG_RELEASE llvmorg-8.0.1
+ENV CLANG_RELEASE llvmorg-9.0.0
 
 RUN cd /usr/src \
     && git clone https://github.com/llvm/llvm-project.git \
@@ -57,7 +57,7 @@ RUN cd /usr/src \
     && cd ../.. \
     && rm -rf llvm-project \
     && cd /usr/local/bin \
-    && rm clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil clang-refactor llvm-exegesis clang-rename llvm-cfi-verify clang-apply-replacements clang-change-namespace clang-extdef-mapping clang-format clang-include-fixer clang-offload-bundler clang-tidy clangd find-all-symbols clang-reorder-fields modularize
+    && rm clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil clang-refactor llvm-exegesis clang-rename llvm-cfi-verify clang-extdef-mapping clang-format clang-offload-bundler llvm-jitlink clang-scan-deps
 
 
 ENV CC clang
