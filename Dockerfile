@@ -21,9 +21,10 @@ RUN apt-get update && apt-get -y install \
    wget \
    software-properties-common \
    subversion \
+   libstdc++-8-dev \
+   libbinutils \
    && add-apt-repository ppa:ubuntu-toolchain-r/test \
    && apt-get update \
-   && apt-get upgrade -y libstdc++6 \
    && rm -rf /var/lib/apt/lists/*
 
 ENV CC gcc
@@ -47,7 +48,7 @@ RUN cd /usr/src \
     && git checkout $CLANG_RELEASE \
     && mkdir build \
     && cd build \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;libcxx;libcxxabi" ../llvm \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;libcxx;libcxxabi;lld" ../llvm \
     && make -j"$(nproc)" \
     && make install \
     && make cxx \
@@ -86,7 +87,10 @@ RUN apt-get autoremove -y git \
     xz-utils \
     wget \
     subversion \
-    software-properties-common
+    software-properties-common \
+    g++
+
+RUN ln -s /usr/local/bin/lld /usr/bin/ld
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
 
