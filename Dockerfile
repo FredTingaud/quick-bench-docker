@@ -35,7 +35,7 @@ RUN cd /usr/src/ \
     && cd linux \
     && git checkout tags/v4.14 \
     && cd tools/perf \
-    && make \
+    && make -j"$(nproc)" \
     && cp perf /usr/bin \
     && cd /usr/src \
     && rm -rf linux
