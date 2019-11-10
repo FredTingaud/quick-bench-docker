@@ -35,7 +35,7 @@ RUN cd /usr/src/ \
     && cd linux \
     && git checkout tags/v4.14 \
     && cd tools/perf \
-    && make \
+    && make install -j"$(nproc)" \
     && cp perf /usr/bin \
     && cd /usr/src \
     && rm -rf linux
@@ -50,7 +50,7 @@ RUN curl -fSL "http://ftpmirror.gnu.org/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.ta
     && mkdir build \
     && cd build \
     && /usr/src/gcc/configure --disable-multilib \
-    && make -j4 \
+    && make -j"$(nproc)" \
     && make install-strip \
     && cd ../.. \
     && rm -rf gcc
@@ -64,7 +64,7 @@ RUN cd /usr/src/ \
     && mkdir -p /usr/src/benchmark/build/ \
     && cd /usr/src/benchmark/build/ \
     && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true .. -DCMAKE_CXX_FLAGS="-Wno-error=lto-type-mismatch" \
-    && make -j4 \
+    && make -j"$(nproc)" \
     && make install
 
 RUN svn checkout https://github.com/ericniebler/range-v3/tags/0.3.0/include /usr/include
@@ -94,3 +94,4 @@ COPY ./run /home/builder/run
 USER builder
 
 WORKDIR /home/builder
+
