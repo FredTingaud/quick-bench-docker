@@ -11,7 +11,6 @@ RUN apt-get update && apt-get -y install \
    flex \
    bison \
    binutils-dev \
-   zlib1g-dev \
    libiberty-dev \
    libelf-dev \
    libmpc-dev \
@@ -22,7 +21,7 @@ RUN apt-get update && apt-get -y install \
    software-properties-common \
    subversion \
    libstdc++-6-dev \
-   binutils \
+   libbinutils \
    && add-apt-repository ppa:ubuntu-toolchain-r/test \
    && apt-get update \
    && rm -rf /var/lib/apt/lists/*
@@ -84,8 +83,6 @@ RUN apt-get autoremove -y git \
     cmake \
     flex \
     bison \
-    binutils-dev \
-    zlib1g-dev \
     libiberty-dev \
     curl \
     xz-utils \
