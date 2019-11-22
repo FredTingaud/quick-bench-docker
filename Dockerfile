@@ -11,7 +11,6 @@ RUN apt-get update && apt-get -y install \
    flex \
    bison \
    binutils-dev \
-   zlib1g-dev \
    libiberty-dev \
    libelf-dev \
    libmpc-dev \
@@ -86,7 +85,6 @@ RUN apt-get autoremove -y git \
     flex \
     bison \
     binutils-dev \
-    zlib1g-dev \
     libiberty-dev \
     curl \
     xz-utils \
