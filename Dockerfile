@@ -85,10 +85,7 @@ RUN apt-get autoremove -y git \
     xz-utils \
     wget \
     subversion \
-    software-properties-common \
-    g++
-
-RUN ln -s /usr/local/bin/lld /usr/bin/ld
+    software-properties-common
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
 
