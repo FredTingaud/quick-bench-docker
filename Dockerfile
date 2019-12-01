@@ -12,7 +12,7 @@ RUN apt-get update && apt-get -y install \
    bison \
    binutils-dev \
    libiberty-dev \
-   libelf1 \
+   libelf-dev \
    libmpc-dev \
    g++ \
    curl \
