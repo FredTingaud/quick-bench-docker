@@ -84,12 +84,12 @@ RUN apt-get autoremove -y git \
     cmake \
     flex \
     bison \
-    binutils-dev \
     libiberty-dev \
     curl \
     xz-utils \
     wget \
     subversion \
+    libstdc++-7-dev \
     software-properties-common
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
