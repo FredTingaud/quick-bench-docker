@@ -20,6 +20,7 @@ RUN apt-get update && apt-get -y install \
    zip \
    unzip \
    subversion \
+   time \
    && rm -rf /var/lib/apt/lists/*
 
 ENV CC gcc
@@ -83,6 +84,8 @@ COPY ./annotate /home/builder/annotate
 COPY ./build /home/builder/build
 
 COPY ./run /home/builder/run
+
+COPY ./time /home/builder/time-build
 
 USER builder
 
