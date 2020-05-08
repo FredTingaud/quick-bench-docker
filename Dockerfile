@@ -22,6 +22,7 @@ RUN apt-get update && apt-get -y install \
    subversion \
    libstdc++-7-dev \
    libbinutils \
+   time \
    && add-apt-repository ppa:ubuntu-toolchain-r/test \
    && apt-get update \
    && rm -rf /var/lib/apt/lists/*
@@ -96,6 +97,10 @@ COPY ./build /home/builder/build
 COPY ./run /home/builder/run
 
 COPY ./build-libcxx /home/builder/build-libcxx
+
+COPY ./time /home/builder/time-build
+
+COPY ./time-libcxx /home/builder/time-build-libcxx
 
 USER builder
 
