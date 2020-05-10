@@ -76,6 +76,13 @@ RUN cd /usr/src/ \
 
 RUN svn checkout https://github.com/ericniebler/range-v3/tags/0.3.0/include /usr/include
 
+RUN git clone https://github.com/hoytech/vmtouch.git \
+    && cd vmtouch \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf vmtouch
+
 RUN apt-get autoremove -y git \
     cmake \
     flex \
