@@ -109,6 +109,10 @@ COPY ./time /home/builder/time-build
 
 COPY ./time-libcxx /home/builder/time-build-libcxx
 
+COPY ./prebuild /home/builder/prebuild
+
+COPY ./prebuild-libcxx /home/builder/prebuild-libcxx
+
 USER builder
 
 WORKDIR /home/builder
