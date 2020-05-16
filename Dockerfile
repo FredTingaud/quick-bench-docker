@@ -100,6 +100,8 @@ COPY ./run /home/builder/run
 
 COPY ./time /home/builder/time-build
 
+COPY ./prebuild /home/builder/prebuild
+
 USER builder
 
 WORKDIR /home/builder
