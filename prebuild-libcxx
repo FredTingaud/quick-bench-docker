@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+export LD_LIBRARY_PATH=/usr/local/lib
+export CPLUS_INCLUDE_PATH=/usr/local/include/c++/v1
+export C_INCLUDE_PATH=/usr/local/include/c++/v1
+
+FILENAME=$1
+PREPROC=$2
+ASM=$3
+PARAMETERS="${@:4}"
+
+if [ $PREPROC = true ]; then
+    clang++ -E -stdlib=libc++ $PARAMETERS $FILENAME > bench.i
+fi
+
+if [ "$ASM" != "none" ]; then
+    clang++ -S -masm=$ASM -o bench.ss -stdlib=libc++ $PARAMETERS $FILENAME
+    # clang -S tries to remove the output instead of overwriting it.
+    # That is a problem when trying to get the file out of docker through a shared file
+    # So instead we use a temp file then cp on the target, that will overwrite
+    cp bench.ss bench.s
+fi
