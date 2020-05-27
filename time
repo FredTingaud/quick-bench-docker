@@ -9,19 +9,19 @@ SECONDS=0
 MAX_TIME="${BB_TIMEOUT:-60}"
 MAX_COUNTER="${BB_MAX:-20}"
 LAST_TIME=0
-LAST_DURATION=0
+MAX_DURATION=0
 
 # Generate a list of all used includes to display
 clang++ -H -fsyntax-only $FILENAME 2> bench.inc
 # Make a cleaned copy that can be used as input for vmtouch
 sed -r 's/\.+ //' bench.inc | xargs realpath > bench.cache
 
-while [[ $COUNTER -lt $MAX_COUNTER && $SECONDS -lt $((MAX_TIME - LAST_DURATION)) ]]; do
+while [[ $COUNTER -lt $MAX_COUNTER && $SECONDS -lt $((MAX_TIME - MAX_DURATION)) ]]; do
   # Make sure no include is in the cache before starting the build
   vmtouch -eq $(< bench.cache)
   script --flush --quiet --return output.txt --command "/usr/bin/time -o one-bench.out -f \"%U\t%S\t%M\t%I\t%O\t%F\t%R\" clang++ $PARAMETERS $FILENAME"
   let COUNTER=COUNTER+1
-  (let LAST_DURATION=SECONDS-LAST_TIME) || true
+  let "MAX_DURATION = (MAX_DURATION < (SECONDS-LAST_TIME)) ? (SECONDS-LAST_TIME) : MAX_DURATION" || true
   cat one-bench.out >> bench.out
-  (let LAST_TIME=SECONDS) || true
+  let "LAST_TIME=SECONDS" || true
 done
