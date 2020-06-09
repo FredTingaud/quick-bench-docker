@@ -14,7 +14,8 @@ MAX_DURATION=0
 # Generate a list of all used includes to display
 clang++ -H -fsyntax-only $FILENAME 2> bench.inc
 # Make a cleaned copy that can be used as input for vmtouch
-sed -r 's/\.+ //' bench.inc | xargs realpath > bench.cache
+sed -r 's/\.+ //' bench.inc | xargs -r realpath > bench.cache
+echo $1 >> bench.cache
 
 while [[ $COUNTER -lt $MAX_COUNTER && $SECONDS -lt $((MAX_TIME - MAX_DURATION)) ]]; do
   # Make sure no include is in the cache before starting the build
