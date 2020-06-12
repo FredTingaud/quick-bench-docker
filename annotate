@@ -1,0 +1,4 @@
+while read line ;
+do echo "----------- $line" >> bench.perf
+perf annotate --stdio $line >> bench.perf ;
+done <bench.func
