@@ -31,11 +31,9 @@ ENV CC gcc
 ENV CXX g++
 
 RUN cd /usr/src/ \
-    && git clone https://github.com/torvalds/linux.git \
-    && cd linux \
-    && git checkout tags/v4.14 \
-    && cd tools/perf \
-    && make \
+    && git clone --single-branch --branch v4.14 https://github.com/torvalds/linux.git \
+    && cd linux/tools/perf \
+    && make -j"$(nproc)" \
     && cp perf /usr/bin \
     && cd /usr/src \
     && rm -rf linux
@@ -68,7 +66,7 @@ ENV CC clang
 ENV CXX clang++
 
 RUN cd /usr/src/ \
-    && git clone https://github.com/google/benchmark.git \
+    && git clone --single-branch --branch v1.5.1 https://github.com/google/benchmark.git \
     && mkdir -p /usr/src/benchmark/build/ \
     && cd /usr/src/benchmark/build/ \
     && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \

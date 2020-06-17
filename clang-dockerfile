@@ -37,10 +37,8 @@ ENV CC gcc
 ENV CXX g++
 
 RUN cd /usr/src/ \
-    && git clone https://github.com/torvalds/linux.git \
-    && cd linux \
-    && git checkout tags/v4.14 \
-    && cd tools/perf \
+    && git clone --single-branch --branch v4.14 https://github.com/torvalds/linux.git \
+    && cd linux/tools/perf \
     && make -j"$(nproc)" \
     && cp perf /usr/bin \
     && cd /usr/src \
@@ -49,9 +47,8 @@ RUN cd /usr/src/ \
 ENV CLANG_RELEASE $release
 
 RUN cd /usr/src \
-    && git clone https://github.com/llvm/llvm-project.git \
+    && git clone --single-branch --branch $CLANG_RELEASE https://github.com/llvm/llvm-project.git \
     && cd llvm-project \
-    && git checkout $CLANG_RELEASE \
     && mkdir build \
     && cd build \
     && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;libcxx;libcxxabi;lld" ../llvm \
@@ -68,10 +65,8 @@ RUN cd /usr/src \
 ENV CC clang
 ENV CXX clang++
 
-RUN ln -s /usr/local/bin/ld.lld /usr/bin/ld
-
 RUN cd /usr/src/ \
-    && git clone https://github.com/google/benchmark.git \
+    && git clone --single-branch --branch v1.5.1 https://github.com/google/benchmark.git \
     && mkdir -p /usr/src/benchmark/build/ \
     && cd /usr/src/benchmark/build/ \
     && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
@@ -94,13 +89,15 @@ RUN apt-get autoremove -y git \
     cmake \
     flex \
     bison \
-    binutils-dev \
     libiberty-dev \
     curl \
     xz-utils \
     wget \
     subversion \
-    software-properties-common
+    software-properties-common \
+    g++
+
+RUN rm -f /usr/bin/ld && ln -s /usr/local/bin/ld.lld /usr/bin/ld
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
 
