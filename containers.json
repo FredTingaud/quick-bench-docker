@@ -46,5 +46,65 @@
   },
   "clang-3.8": {
     "docker": "clang38-dockerfile"
+  },
+  "gcc-10.1": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "10.1.0"
+  },
+  "gcc-9.3": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "9.3.0"
+  },
+  "gcc-9.2": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "9.2.0"
+  },
+  "gcc-9.1": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "9.1.0"
+  },
+  "gcc-8.4": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "8.4.0"
+  },
+  "gcc-8.3": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "8.3.0"
+  },
+  "gcc-8.2": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "8.2.0"
+  },
+  "gcc-8.1": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "8.1.0"
+  },
+  "gcc-7.5": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "7.5.0"
+  },
+  "gcc-7.4": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "7.4.0"
+  },
+  "gcc-7.3": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "7.3.0"
+  },
+  "gcc-7.2": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "7.2.0"
+  },
+  "gcc-6.5": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "6.5.0"
+  },
+  "gcc-6.4": {
+    "docker": "gcc64-dockerfile",
+    "GCC_VERSION": "6.4.0"
+  },
+  "gcc-5.5": {
+    "docker": "gcc55-dockerfile",
+    "GCC_VERSION": "5.5.0"
   }
 }
