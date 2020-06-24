@@ -7,8 +7,8 @@ import subprocess
 import os
 
 def pretty(s):
-   print("")
-   print(f"\033[91m***> {s}\033[0m")
+   print("", flush=True)
+   print(f"\033[91m***> {s}\033[0m", flush=True)
 
 def concat(x, key, val):
    x.extend(["--build-arg", f"{key}={val}"])
