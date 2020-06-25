@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 MAINTAINER Fred Tingaud <ftingaud@hotmail.com>
 
@@ -10,7 +10,9 @@ ARG libstdcxx
 
 ARG unused_tools
 
-RUN apt-get update && apt-get -y install \
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get -qy install \
    git \
    cmake \
    libfreetype6-dev \
@@ -24,20 +26,17 @@ RUN apt-get update && apt-get -y install \
    curl \
    xz-utils \
    wget \
-   software-properties-common \
    subversion \
    $libstdcxx \
-   libbinutils \
+   python3 \
    time \
-   && add-apt-repository ppa:ubuntu-toolchain-r/test \
-   && apt-get update \
    && rm -rf /var/lib/apt/lists/*
 
 ENV CC gcc
 ENV CXX g++
 
 RUN cd /usr/src/ \
-    && git clone --single-branch --branch v4.14 https://github.com/torvalds/linux.git \
+    && git clone --single-branch --branch v5.6 https://github.com/torvalds/linux.git \
     && cd linux/tools/perf \
     && make -j"$(nproc)" \
     && cp perf /usr/bin \
@@ -94,8 +93,8 @@ RUN apt-get autoremove -y git \
     xz-utils \
     wget \
     subversion \
-    software-properties-common \
-    g++
+    g++ \
+    python3
 
 RUN rm -f /usr/bin/ld && ln -s /usr/local/bin/ld.lld /usr/bin/ld
 

@@ -1,12 +1,14 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 MAINTAINER Fred Tingaud <ftingaud@hotmail.com>
 
 USER root
 
+ENV DEBIAN_FRONTEND noninteractive
+
 ARG GCC_VERSION
 
-RUN apt-get update && apt-get -y install \
+RUN apt-get update && apt-get -qy install \
    git \
    cmake \
    libfreetype6-dev \
@@ -19,21 +21,18 @@ RUN apt-get update && apt-get -y install \
    g++ \
    curl \
    xz-utils \
-   software-properties-common \
    zip \
    unzip \
    subversion \
+   python3 \
    time \
-   && add-apt-repository ppa:ubuntu-toolchain-r/test \
-   && apt-get update \
-   && apt-get upgrade -y libstdc++6 \
    && rm -rf /var/lib/apt/lists/*
 
 ENV CC gcc
 ENV CXX g++
 
 RUN cd /usr/src/ \
-    && git clone --single-branch --branch v4.14 https://github.com/torvalds/linux.git \
+    && git clone --single-branch --branch v5.6 https://github.com/torvalds/linux.git \
     && cd linux/tools/perf \
     && make -j"$(nproc)" \
     && cp perf /usr/bin \
@@ -54,7 +53,7 @@ RUN curl -fSL "http://ftpmirror.gnu.org/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.ta
     && sed -i "s/resolv\.h/bits\/types\/res_state\.h/g" libsanitizer/tsan/tsan_platform_linux.cc \
     && mkdir build \
     && cd build \
-    && /usr/src/gcc/configure --disable-multilib \
+    && /usr/src/gcc/configure --disable-multilib --disable-libsanitizer --enable-languages=c,c++ \
     && make -j"$(nproc)" \
     && make install-strip \
     && cd ../.. \
@@ -88,7 +87,7 @@ RUN apt-get autoremove -y git \
     unzip \
     subversion \
     zip \
-    software-properties-common
+    python3
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
 

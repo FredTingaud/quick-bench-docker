@@ -1,12 +1,14 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 MAINTAINER Fred Tingaud <ftingaud@hotmail.com>
 
 USER root
 
+ENV DEBIAN_FRONTEND noninteractive
+
 ARG GCC_VERSION
 
-RUN apt-get update && apt-get -y install \
+RUN apt-get update && apt-get -qy install \
    git \
    cmake \
    libfreetype6-dev \
@@ -22,6 +24,7 @@ RUN apt-get update && apt-get -y install \
    zip \
    unzip \
    subversion \
+   python3 \
    time \
    && rm -rf /var/lib/apt/lists/*
 
@@ -29,7 +32,7 @@ ENV CC gcc
 ENV CXX g++
 
 RUN cd /usr/src/ \
-    && git clone --single-branch --branch v4.14 https://github.com/torvalds/linux.git \
+    && git clone --single-branch --branch v5.6 https://github.com/torvalds/linux.git \
     && cd linux/tools/perf \
     && make -j"$(nproc)" \
     && cp perf /usr/bin \
@@ -43,7 +46,7 @@ RUN curl -fSL "http://ftpmirror.gnu.org/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.ta
     && cd /usr/src/gcc \
     && mkdir build \
     && cd build \
-    && /usr/src/gcc/configure --disable-multilib \
+    && /usr/src/gcc/configure --disable-multilib --disable-libsanitizer --enable-languages=c,c++ \
     && make -j"$(nproc)" \
     && make install-strip \
     && cd ../.. \
@@ -53,7 +56,7 @@ RUN cd /usr/src/ \
     && git clone --single-branch --branch v1.5.1 https://github.com/google/benchmark.git \
     && mkdir -p /usr/src/benchmark/build/ \
     && cd /usr/src/benchmark/build/ \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON -DCMAKE_CXX_FLAGS="-Wno-error=lto-type-mismatch" .. \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON .. \
     && make -j"$(nproc)" \
     && make install
 
@@ -76,7 +79,8 @@ RUN apt-get autoremove -y git \
     xz-utils \
     unzip \
     subversion \
-    zip
+    zip \
+    python3
 
 RUN useradd -m -s /sbin/nologin -N -u 1000 builder
 

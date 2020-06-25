@@ -1,10 +1,12 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 MAINTAINER Fred Tingaud <ftingaud@hotmail.com>
 
 USER root
 
-RUN apt-get update && apt-get -y install \
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get -qy install \
    git \
    cmake \
    libfreetype6-dev \
@@ -18,20 +20,17 @@ RUN apt-get update && apt-get -y install \
    curl \
    xz-utils \
    wget \
-   software-properties-common \
    subversion \
-   libstdc++-6-dev \
-   libbinutils \
+   libstdc++-7-dev \
+   python3 \
    time \
-   && add-apt-repository ppa:ubuntu-toolchain-r/test \
-   && apt-get update \
    && rm -rf /var/lib/apt/lists/*
 
 ENV CC gcc
 ENV CXX g++
 
 RUN cd /usr/src/ \
-    && git clone --single-branch --branch v4.14 https://github.com/torvalds/linux.git \
+    && git clone --single-branch --branch v5.6 https://github.com/torvalds/linux.git \
     && cd linux/tools/perf \
     && make -j"$(nproc)" \
     && cp perf /usr/bin \
@@ -39,6 +38,8 @@ RUN cd /usr/src/ \
     && rm -rf linux
 
 ENV CLANG_RELEASE release_39
+
+COPY ./patches/0-clang4-svn.patch /usr/src/patch-llvm/
 
 RUN cd /usr/src/ \
     && svn co "http://llvm.org/svn/llvm-project/llvm/branches/$CLANG_RELEASE" llvm \
@@ -49,6 +50,8 @@ RUN cd /usr/src/ \
     && svn co "http://llvm.org/svn/llvm-project/libcxxabi/branches/$CLANG_RELEASE" libcxxabi \
     && svn co "http://llvm.org/svn/llvm-project/lld/branches/$CLANG_RELEASE" lld \
     && cd .. \
+    && find /usr/src/patch-llvm/ -type f -name '*.patch' -print0 | sort -z | xargs -0 -t -n 1 patch -p1 --forward -i \
+    && rm -rf /usr/src/patch-llvm \
     && mkdir build \
     && cd build \
     && ln -s /usr/include/locale.h /usr/include/xlocale.h \
@@ -95,7 +98,7 @@ RUN apt-get autoremove -y git \
     xz-utils \
     wget \
     subversion \
-    software-properties-common \
+    python3 \
     g++
 
 RUN rm -f /usr/bin/ld && ln -s /usr/local/bin/ld.lld /usr/bin/ld
