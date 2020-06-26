@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:18.04
 
 MAINTAINER Fred Tingaud <ftingaud@hotmail.com>
 
@@ -21,7 +21,7 @@ RUN apt-get update && apt-get -qy install \
    xz-utils \
    wget \
    subversion \
-   libstdc++-7-dev \
+   libstdc++-6-dev \
    python3 \
    time \
    && rm -rf /var/lib/apt/lists/*
@@ -39,7 +39,7 @@ RUN cd /usr/src/ \
 
 ENV CLANG_RELEASE release_39
 
-COPY ./patches/0-clang4-svn.patch /usr/src/patch-llvm/
+COPY ./patches/0-clang39.patch /usr/src/patch-llvm/
 
 RUN cd /usr/src/ \
     && svn co "http://llvm.org/svn/llvm-project/llvm/branches/$CLANG_RELEASE" llvm \

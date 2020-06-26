@@ -38,9 +38,9 @@
     "unused_tools": "clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
   },
   "clang-4.0": {
-    "docker": "clang-svn-dockerfile",
+    "docker": "clang-ubuntu18-dockerfile",
     "release": "release_40",
-    "libstdcxx": "libstdc++-7-dev",
+    "libstdcxx": "libstdc++-6-dev",
     "patches": "./patches/?-clang?-svn.patch",
     "unused_tools": "clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
   },
