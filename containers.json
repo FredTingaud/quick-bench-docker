@@ -1,7 +1,13 @@
 {
+  "clang-10.0": {
+    "docker": "clang-dockerfile",
+    "release": "llvmorg-10.0.0",
+    "libstdcxx": "libstdc++-9-dev",
+    "unused_tools": "clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil clang-refactor llvm-exegesis clang-rename llvm-cfi-verify clang-extdef-mapping clang-format clang-offload-bundler llvm-jitlink clang-scan-deps"
+  },
   "clang-9.0": {
     "docker": "clang-dockerfile",
-    "release": "llvmorg-9.0.0",
+    "release": "llvmorg-9.0.1",
     "libstdcxx": "libstdc++-8-dev",
     "unused_tools": "clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil clang-refactor llvm-exegesis clang-rename llvm-cfi-verify clang-extdef-mapping clang-format clang-offload-bundler llvm-jitlink clang-scan-deps"
   },
