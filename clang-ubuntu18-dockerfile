@@ -1,0 +1,134 @@
+FROM ubuntu:18.04
+
+MAINTAINER Fred Tingaud <ftingaud@hotmail.com>
+
+USER root
+
+ENV DEBIAN_FRONTEND noninteractive
+
+ARG release
+
+ARG libstdcxx
+
+ARG unused_tools
+
+ARG patches
+
+RUN apt-get update && apt-get -qy install \
+   git \
+   cmake \
+   libfreetype6-dev \
+   flex \
+   bison \
+   binutils-dev \
+   libiberty-dev \
+   libelf-dev \
+   libmpc-dev \
+   g++ \
+   curl \
+   xz-utils \
+   wget \
+   subversion \
+   $libstdcxx \
+   python3 \
+   time \
+   && rm -rf /var/lib/apt/lists/*
+
+ENV CC gcc
+ENV CXX g++
+
+RUN cd /usr/src/ \
+    && git clone --single-branch --branch v5.6 https://github.com/torvalds/linux.git \
+    && cd linux/tools/perf \
+    && make -j"$(nproc)" \
+    && cp perf /usr/bin \
+    && cd /usr/src \
+    && rm -rf linux
+
+ENV CLANG_RELEASE $release
+
+COPY $patches /usr/src/patch-llvm/
+
+RUN cd /usr/src/ \
+    && svn co "http://llvm.org/svn/llvm-project/llvm/branches/$CLANG_RELEASE" llvm \
+    && cd llvm/tools \
+    && svn co "http://llvm.org/svn/llvm-project/cfe/branches/$CLANG_RELEASE" clang \
+    && cd ../projects \
+    && svn co "http://llvm.org/svn/llvm-project/libcxx/branches/$CLANG_RELEASE" libcxx \
+    && svn co "http://llvm.org/svn/llvm-project/libcxxabi/branches/$CLANG_RELEASE" libcxxabi \
+    && svn co "http://llvm.org/svn/llvm-project/lld/branches/$CLANG_RELEASE" lld \
+    && cd .. \
+    && find /usr/src/patch-llvm/ -type f -name '*.patch' -print0 | sort -z | xargs -0 -t -r -n 1 patch -p1 --forward -i \
+    && rm -rf /usr/src/patch-llvm \
+    && mkdir build \
+    && cd build \
+    && if [ ! -f /usr/include/xlocale.h ] ; then ln -s /usr/include/locale.h /usr/include/xlocale.h ; else true ; fi \
+    && cmake -DCMAKE_BUILD_TYPE=Release .. \
+    && make -j"$(nproc)" \
+    && make install \
+    && make cxx \
+    && make install-cxx install-cxxabi \
+    && cp ../projects/libcxxabi/include/* /usr/local/include/c++/v1/. \
+    && cd ../.. \
+    && rm -rf llvm \
+    && cd /usr/local/bin \
+    && rm $unused_tools
+
+ENV CC clang
+ENV CXX clang++
+
+RUN cd /usr/src/ \
+    && git clone --single-branch --branch v1.5.1 https://github.com/google/benchmark.git \
+    && mkdir -p /usr/src/benchmark/build/ \
+    && cd /usr/src/benchmark/build/ \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
+    && make -j"$(nproc)" \
+    && make install \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_DOWNLOAD_DEPENDENCIES=ON -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++" -DCMAKE_EXE_LINKER_FLAGS="-lc++abi" -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
+    && make clean all -j"$(nproc)" \
+    && cp src/libbenchmark.a /usr/local/lib/libbenchmark-cxx.a
+
+RUN svn checkout https://github.com/ericniebler/range-v3/tags/0.3.0/include /usr/include
+
+RUN git clone https://github.com/hoytech/vmtouch.git \
+    && cd vmtouch \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf vmtouch
+
+RUN apt-get autoremove -y git \
+    cmake \
+    flex \
+    bison \
+    libiberty-dev \
+    curl \
+    xz-utils \
+    wget \
+    subversion \
+    g++ \
+    python3
+
+RUN rm -f /usr/bin/ld && ln -s /usr/local/bin/ld.lld /usr/bin/ld
+
+RUN useradd -m -s /sbin/nologin -N -u 1000 builder
+
+COPY ./annotate /home/builder/annotate
+
+COPY ./build /home/builder/build
+
+COPY ./run /home/builder/run
+
+COPY ./build-libcxx /home/builder/build-libcxx
+
+COPY ./time /home/builder/time-build
+
+COPY ./time-libcxx /home/builder/time-build-libcxx
+
+COPY ./prebuild /home/builder/prebuild
+
+COPY ./prebuild-libcxx /home/builder/prebuild-libcxx
+
+USER builder
+
+WORKDIR /home/builder
