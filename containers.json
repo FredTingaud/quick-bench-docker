@@ -1,7 +1,13 @@
 {
+  "clang-11.0": {
+    "docker": "clang-dockerfile",
+    "release": "llvmorg-11.0.0",
+    "libstdcxx": "libstdc++-10-dev",
+    "unused_tools": "clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil clang-refactor llvm-exegesis clang-rename llvm-cfi-verify clang-extdef-mapping clang-format clang-offload-bundler llvm-jitlink clang-scan-deps"
+   },
   "clang-10.0": {
     "docker": "clang-dockerfile",
-    "release": "llvmorg-10.0.0",
+    "release": "llvmorg-10.0.1",
     "libstdcxx": "libstdc++-9-dev",
     "unused_tools": "clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil clang-refactor llvm-exegesis clang-rename llvm-cfi-verify clang-extdef-mapping clang-format clang-offload-bundler llvm-jitlink clang-scan-deps"
   },
@@ -55,6 +61,10 @@
   },
   "clang-3.8": {
     "docker": "clang38-dockerfile"
+  },
+  "gcc-10.2": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "10.2.0"
   },
   "gcc-10.1": {
     "docker": "gcc-dockerfile",
