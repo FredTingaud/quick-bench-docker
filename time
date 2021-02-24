@@ -12,7 +12,7 @@ LAST_TIME=0
 MAX_DURATION=0
 
 # Generate a list of all used includes to display
-$CXX -H -fsyntax-only $FILENAME 2> bench.inc
+$CXX -H -fsyntax-only $PARAMETERS $FILENAME 2> bench.inc
 # Make a cleaned copy that can be used as input for vmtouch
 sed -r 's/\.+ //' bench.inc | xargs -r realpath > bench.cache
 echo $1 >> bench.cache
