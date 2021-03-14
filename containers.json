@@ -37,21 +37,21 @@
   },
   "clang-6.0": {
     "docker": "clang-svn-dockerfile",
-    "release": "release_60",
+    "release": "llvmorg-6.0.1",
     "libstdcxx": "libstdc++-7-dev",
     "patches": "./patches/none",
     "unused_tools": "clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
   },
   "clang-5.0": {
     "docker": "clang-svn-dockerfile",
-    "release": "release_50",
+    "release": "llvmorg-5.0.2",
     "libstdcxx": "libstdc++-7-dev",
     "patches": "./patches/0-clang5-svn.patch",
     "unused_tools": "clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
   },
   "clang-4.0": {
-    "docker": "clang-ubuntu18-dockerfile",
-    "release": "release_40",
+    "docker": "clang-svn-dockerfile",
+    "release": "llvmorg-4.0.1",
     "libstdcxx": "libstdc++-6-dev",
     "patches": "./patches/?-clang?-svn.patch",
     "unused_tools": "clang-check opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"

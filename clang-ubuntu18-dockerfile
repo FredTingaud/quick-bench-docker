@@ -49,28 +49,22 @@ ENV CLANG_RELEASE $release
 
 COPY $patches /usr/src/patch-llvm/
 
-RUN cd /usr/src/ \
-    && svn co "http://llvm.org/svn/llvm-project/llvm/branches/$CLANG_RELEASE" llvm \
-    && cd llvm/tools \
-    && svn co "http://llvm.org/svn/llvm-project/cfe/branches/$CLANG_RELEASE" clang \
-    && cd ../projects \
-    && svn co "http://llvm.org/svn/llvm-project/libcxx/branches/$CLANG_RELEASE" libcxx \
-    && svn co "http://llvm.org/svn/llvm-project/libcxxabi/branches/$CLANG_RELEASE" libcxxabi \
-    && svn co "http://llvm.org/svn/llvm-project/lld/branches/$CLANG_RELEASE" lld \
-    && cd .. \
+RUN cd /usr/src \
+    && git clone --single-branch --branch $CLANG_RELEASE https://github.com/llvm/llvm-project.git \
+    && cd llvm-project \
     && find /usr/src/patch-llvm/ -type f -name '*.patch' -print0 | sort -z | xargs -0 -t -r -n 1 patch -p1 --forward -i \
     && rm -rf /usr/src/patch-llvm \
     && mkdir build \
     && cd build \
     && if [ ! -f /usr/include/xlocale.h ] ; then ln -s /usr/include/locale.h /usr/include/xlocale.h ; else true ; fi \
-    && cmake -DCMAKE_BUILD_TYPE=Release .. \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;libcxx;libcxxabi;lld" ../llvm \
     && make -j"$(nproc)" \
     && make install \
     && make cxx \
     && make install-cxx install-cxxabi \
-    && cp ../projects/libcxxabi/include/* /usr/local/include/c++/v1/. \
+    && cp ../libcxxabi/include/* /usr/local/include/c++/v1/. \
     && cd ../.. \
-    && rm -rf llvm \
+    && rm -rf llvm-project \
     && cd /usr/local/bin \
     && rm $unused_tools
 

@@ -13,8 +13,8 @@ Fixes rhbz#1540620.
 
 diff --git a/include/llvm/ExecutionEngine/Orc/OrcRemoteTargetClient.h b/include/llvm/ExecutionEngine/Orc/OrcRemoteTargetClient.h
 index da02250ba16..bed472e2e0e 100644
---- a/include/llvm/ExecutionEngine/Orc/OrcRemoteTargetClient.h
-+++ b/include/llvm/ExecutionEngine/Orc/OrcRemoteTargetClient.h
+--- a/llvm/include/llvm/ExecutionEngine/Orc/OrcRemoteTargetClient.h
++++ b/llvm/include/llvm/ExecutionEngine/Orc/OrcRemoteTargetClient.h
 @@ -713,8 +713,8 @@ private:
  
    uint32_t getTrampolineSize() const { return RemoteTrampolineSize; }

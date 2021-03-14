@@ -4,8 +4,8 @@ Remove unused lambda captures. NFC
 
 Index: tools/clang/lib/AST/CXXInheritance.cpp
 ===================================================================
---- a/tools/clang/lib/AST/CXXInheritance.cpp	(revision 291938)
-+++ a/tools/clang/lib/AST/CXXInheritance.cpp	(revision 291939)
+--- a/clang/lib/AST/CXXInheritance.cpp	(revision 291938)
++++ a/clang/lib/AST/CXXInheritance.cpp	(revision 291939)
 @@ -88,7 +88,7 @@ bool CXXRecordDecl::isDerivedFrom(const CXXRecordD
    const CXXRecordDecl *BaseDecl = Base->getCanonicalDecl();
    // FIXME: Capturing 'this' is a workaround for name lookup bugs in GCC 4.7.
@@ -26,8 +26,8 @@ Index: tools/clang/lib/AST/CXXInheritance.cpp
        Paths);
 Index: tools/clang/lib/AST/MicrosoftMangle.cpp
 ===================================================================
---- a/tools/clang/lib/AST/MicrosoftMangle.cpp	(revision 291938)
-+++ a/tools/clang/lib/AST/MicrosoftMangle.cpp	(revision 291939)
+--- a/clang/lib/AST/MicrosoftMangle.cpp	(revision 291938)
++++ a/clang/lib/AST/MicrosoftMangle.cpp	(revision 291939)
 @@ -2997,7 +2997,7 @@ void MicrosoftMangleContextImpl::mangleStringLiter
    // N.B. The length is in terms of bytes, not characters.
    Mangler.mangleNumber(SL->getByteLength() + SL->getCharByteWidth());
@@ -48,8 +48,8 @@ Index: tools/clang/lib/AST/MicrosoftMangle.cpp
      unsigned OffsetInCodeUnit = (CharByteWidth - 1) - (Index % CharByteWidth);
 Index: tools/clang/lib/CodeGen/CGOpenMPRuntime.cpp
 ===================================================================
---- a/tools/clang/lib/CodeGen/CGOpenMPRuntime.cpp	(revision 291938)
-+++ a/tools/clang/lib/CodeGen/CGOpenMPRuntime.cpp	(revision 291939)
+--- a/clang/lib/CodeGen/CGOpenMPRuntime.cpp	(revision 291938)
++++ a/clang/lib/CodeGen/CGOpenMPRuntime.cpp	(revision 291939)
 @@ -4006,8 +4006,8 @@ void CGOpenMPRuntime::emitTaskCall(CodeGenFunction
      DepTaskArgs[5] = CGF.Builder.getInt32(0);
      DepTaskArgs[6] = llvm::ConstantPointerNull::get(CGF.VoidPtrTy);
@@ -122,8 +122,8 @@ Index: tools/clang/lib/CodeGen/CGOpenMPRuntime.cpp
      MappableExprsHandler::MapValuesArrayTy Pointers;
 Index: tools/clang/lib/CodeGen/CGOpenMPRuntimeNVPTX.cpp
 ===================================================================
---- a/tools/clang/lib/CodeGen/CGOpenMPRuntimeNVPTX.cpp	(revision 291938)
-+++ a/tools/clang/lib/CodeGen/CGOpenMPRuntimeNVPTX.cpp	(revision 291939)
+--- a/clang/lib/CodeGen/CGOpenMPRuntimeNVPTX.cpp	(revision 291938)
++++ a/clang/lib/CodeGen/CGOpenMPRuntimeNVPTX.cpp	(revision 291939)
 @@ -533,8 +533,7 @@ void CGOpenMPRuntimeNVPTX::emitGenericParallelCall
      ArrayRef<llvm::Value *> CapturedVars, const Expr *IfCond) {
    llvm::Function *Fn = cast<llvm::Function>(OutlinedFn);
@@ -147,8 +147,8 @@ Index: tools/clang/lib/CodeGen/CGOpenMPRuntimeNVPTX.cpp
        llvm::SmallVector<llvm::Value *, 16> OutlinedFnArgs;
 Index: tools/clang/lib/CodeGen/CGStmtOpenMP.cpp
 ===================================================================
---- a/tools/clang/lib/CodeGen/CGStmtOpenMP.cpp	(revision 291938)
-+++ a/tools/clang/lib/CodeGen/CGStmtOpenMP.cpp	(revision 291939)
+--- a/clang/lib/CodeGen/CGStmtOpenMP.cpp	(revision 291938)
++++ a/clang/lib/CodeGen/CGStmtOpenMP.cpp	(revision 291939)
 @@ -986,7 +986,7 @@ void CodeGenFunction::EmitOMPReductionClauseInit(
                          OriginalBaseLValue);
          // Store the address of the original variable associated with the LHS

@@ -37,31 +37,25 @@ RUN cd /usr/src/ \
     && cd /usr/src \
     && rm -rf linux
 
-ENV CLANG_RELEASE release_38
+ENV CLANG_RELEASE llvmorg-3.8.1
 
 COPY ./patches/0-clang38.patch /usr/src/patch-llvm/
 
-RUN cd /usr/src/ \
-    && svn co "http://llvm.org/svn/llvm-project/llvm/branches/$CLANG_RELEASE" llvm \
-    && cd llvm/tools \
-    && svn co "http://llvm.org/svn/llvm-project/cfe/branches/$CLANG_RELEASE" clang \
-    && cd ../projects \
-    && svn co "http://llvm.org/svn/llvm-project/libcxx/branches/$CLANG_RELEASE" libcxx \
-    && svn co "http://llvm.org/svn/llvm-project/libcxxabi/branches/$CLANG_RELEASE" libcxxabi \
-    && cd .. \
-    && find /usr/src/patch-llvm/ -type f -name '*.patch' -print0 | sort -z | xargs -0 -t -n 1 patch -p1 --forward -i \
+RUN cd /usr/src \
+    && git clone --single-branch --branch $CLANG_RELEASE https://github.com/llvm/llvm-project.git \
+    && cd llvm-project \
+    && find /usr/src/patch-llvm/ -type f -name '*.patch' -print0 | sort -z | xargs -0 -t -r -n 1 patch -p1 --forward -i \
     && rm -rf /usr/src/patch-llvm \
     && mkdir build \
     && cd build \
     && ln -s /usr/include/locale.h /usr/include/xlocale.h \
-    && cmake -DCMAKE_BUILD_TYPE=Release .. \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_LIBCXXABI=ON -DLLVM_ENABLE_CXX1Y=ON ../llvm \
     && make -j"$(nproc)" \
     && make install \
-    && make cxx \
-    && make install-libcxx install-libcxxabi \
-    && cp ../projects/libcxxabi/include/* /usr/local/include/c++/v1/. \
+    && make install cxxabi cxx \
+    && cp ../libcxxabi/include/* /usr/local/include/c++/v1/. \
     && cd ../.. \
-    && rm -rf llvm \
+    && rm -rf llvm-project \
     && cd /usr/local/bin \
     && rm clang-check opt llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld
 
