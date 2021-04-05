@@ -49,74 +49,71 @@ RUN cd /usr/src \
     && mkdir build \
     && cd build \
     && ln -s /usr/include/locale.h /usr/include/xlocale.h \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_CXX1Y=ON -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_GO_TESTS=OFF -DLLVM_INCLUDE_DOCS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_EXTERNAL_CLANG_SOURCE_DIR=../clang -DCLANG_INCLUDE_TESTS=OFF -DLLVM_EXTERNAL_LLD_SOURCE_DIR=../lld -DLLVM_TOOL_LIBCXX_BUILD=ON -DLLVM_EXTERNAL_LIBCXX_SOURCE_DIR=../libcxx -DLIBCXX_CXX_ABI=libstdc++ ../llvm \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_CXX1Y=ON -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_GO_TESTS=OFF -DLLVM_INCLUDE_DOCS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_EXTERNAL_CLANG_SOURCE_DIR=../clang -DCLANG_INCLUDE_TESTS=OFF -DLLVM_EXTERNAL_LLD_SOURCE_DIR=../lld -DLLVM_TOOL_LIBCXX_BUILD=ON -DLLVM_EXTERNAL_LIBCXX_SOURCE_DIR=../libcxx -DLIBCXX_CXX_ABI=libstdc++ -DLLVM_TOOL_LIBCXXABI_BUILD=ON -DLLVM_EXTERNAL_LIBCXXABI_SOURCE_DIR=../libcxxabi -DLIBCXXABI_LIBCXX_PATH=../libcxx -DLIBCXXABI_LIBCXX_LIBRARY_PATH=/usr/local/lib ../llvm \
     && make -j"$(nproc)" \
     && make install \
-    && make cxx && make install-libcxx
-#    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_CXX1Y=ON -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_GO_TESTS=OFF -DLLVM_INCLUDE_DOCS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_TOOL_LIBCXXABI_BUILD=ON -DLLVM_EXTERNAL_LIBCXXABI_SOURCE_DIR=../libcxxabi -DLIBCXXABI_LIBCXX_PATH=../libcxx -DLIBCXXABI_LIBCXX_LIBRARY_PATH=/usr/local/lib -DCMAKE_CXX_FLAGS="-fsized-deallocation" ../llvm \
-#    && make install-libcxxabi \
-#    && cp ../libcxxabi/include/* /usr/local/include/c++/v1/. \
-#    && cd ../.. \
-#    && rm -rf llvm-project \
-#    && cd /usr/local/bin \
-#    && rm clang-check opt llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld
-#
-#ENV CC clang
-#ENV CXX clang++
-#
-#RUN cd /usr/src/ \
-#    && git clone --single-branch --branch v1.5.1 https://github.com/google/benchmark.git \
-#    && mkdir -p /usr/src/benchmark/build/ \
-#    && cd /usr/src/benchmark/build/ \
-#    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
-#    && make -j"$(nproc)" \
-#    && make install \
-#    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++" -DCMAKE_EXE_LINKER_FLAGS="-lc++abi" -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
-#    && make clean all -j"$(nproc)" \
-#    && cp src/libbenchmark.a /usr/local/lib/libbenchmark-cxx.a
-#
-#RUN svn checkout https://github.com/ericniebler/range-v3/tags/0.3.0/include /usr/include
-#
-#RUN git clone https://github.com/hoytech/vmtouch.git \
-#    && cd vmtouch \
-#    && make \
-#    && make install \
-#    && cd .. \
-#    && rm -rf vmtouch
-#
-#RUN apt-get autoremove -y git \
-#    cmake \
-#    flex \
-#    bison \
-#    libiberty-dev \
-#    curl \
-#    xz-utils \
-#    wget \
-#    subversion \
-#    python3 \
-#    g++
-#
-#RUN rm -f /usr/bin/ld && ln -s /usr/local/bin/ld.lld /usr/bin/ld
-#
-#RUN useradd -m -s /sbin/nologin -N -u 1000 builder
-#
-#COPY ./annotate /home/builder/annotate
-#
-#COPY ./build /home/builder/build
-#
-#COPY ./run /home/builder/run
-#
-#COPY ./build-libcxx /home/builder/build-libcxx
-#
-#COPY ./time /home/builder/time-build
-#
-#COPY ./time-libcxx /home/builder/time-build-libcxx
-#
-#COPY ./prebuild /home/builder/prebuild
-#
-#COPY ./prebuild-libcxx /home/builder/prebuild-libcxx
-#
-#USER builder
-#
-#WORKDIR /home/builder
-#
+    && make cxx && make install-libcxx install-libcxxabi \
+    && cp ../libcxxabi/include/* /usr/local/include/c++/v1/. \
+    && cd ../.. \
+    && rm -rf llvm-project \
+    && cd /usr/local/bin \
+    && rm clang-check opt llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld
+
+ENV CC clang
+ENV CXX clang++
+
+RUN cd /usr/src/ \
+    && git clone --single-branch --branch v1.5.1 https://github.com/google/benchmark.git \
+    && mkdir -p /usr/src/benchmark/build/ \
+    && cd /usr/src/benchmark/build/ \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
+    && make -j"$(nproc)" \
+    && make install \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++" -DCMAKE_EXE_LINKER_FLAGS="-lc++abi" -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
+    && make clean all -j"$(nproc)" \
+    && cp src/libbenchmark.a /usr/local/lib/libbenchmark-cxx.a
+
+RUN svn checkout https://github.com/ericniebler/range-v3/tags/0.3.0/include /usr/include
+
+RUN git clone https://github.com/hoytech/vmtouch.git \
+    && cd vmtouch \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf vmtouch
+
+RUN apt-get autoremove -y git \
+    cmake \
+    flex \
+    bison \
+    libiberty-dev \
+    curl \
+    xz-utils \
+    wget \
+    subversion \
+    python3 \
+    g++
+
+RUN rm -f /usr/bin/ld && ln -s /usr/local/bin/ld.lld /usr/bin/ld
+
+RUN useradd -m -s /sbin/nologin -N -u 1000 builder
+
+COPY ./annotate /home/builder/annotate
+
+COPY ./build /home/builder/build
+
+COPY ./run /home/builder/run
+
+COPY ./build-libcxx /home/builder/build-libcxx
+
+COPY ./time /home/builder/time-build
+
+COPY ./time-libcxx /home/builder/time-build-libcxx
+
+COPY ./prebuild /home/builder/prebuild
+
+COPY ./prebuild-libcxx /home/builder/prebuild-libcxx
+
+USER builder
+
+WORKDIR /home/builder

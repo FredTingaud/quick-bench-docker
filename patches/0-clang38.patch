@@ -89,4 +89,54 @@ Index: tools/clang/lib/CodeGen/CGStmtOpenMP.cpp
        NewVVal = XRValue;
        return ExprRValue;
      };
+index 7a2c864c311..f263fc54a01 100644
+--- a/libcxxabi/src/cxa_new_delete.cpp
++++ b/libcxxabi/src/cxa_new_delete.cpp
+@@ -173,6 +173,23 @@ operator delete(void* ptr, const std::nothrow_t&)
+     ::operator delete(ptr);
+ }
+
++/*
++[new.delete.single]
++
++calls operator delete(ptr)
++*/
++  __attribute__((__weak__, __visibility__("default")))
++  void
++  operator delete(void* ptr, size_t)
++#if __has_feature(cxx_noexcept)
++      noexcept
++  #else
++  throw()
++  #endif
++{
++  ::operator delete(ptr);
++}
++
+ /*
+ [new.delete.array]
+
+@@ -207,6 +224,23 @@ operator delete[] (void* ptr, const std::nothrow_t&)
+     ::operator delete[](ptr);
+ }
+
++/*
++[new.delete.array]
++
++calls operator delete[](ptr)
++*/
++  __attribute__((__weak__, __visibility__("default")))
++  void
++  operator delete[] (void* ptr, size_t)
++#if __has_feature(cxx_noexcept)
++      noexcept
++  #else
++  throw()
++  #endif
++{
++  ::operator delete[](ptr);
++}
++
+ namespace std
+ {
 

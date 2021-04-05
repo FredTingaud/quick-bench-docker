@@ -49,10 +49,10 @@ RUN cd /usr/src \
     && mkdir build \
     && cd build \
     && ln -s /usr/include/locale.h /usr/include/xlocale.h \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_LIBCXX=ON -DLLVM_ENABLE_LIBCXXABI=ON -DLLVM_ENABLE_CXX1Y=ON ../llvm \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_CXX1Y=ON -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_GO_TESTS=OFF -DLLVM_INCLUDE_DOCS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_EXTERNAL_CLANG_SOURCE_DIR=../clang -DCLANG_INCLUDE_TESTS=OFF -DLLVM_TOOL_LIBCXX_BUILD=ON -DLLVM_EXTERNAL_LIBCXX_SOURCE_DIR=../libcxx -DLIBCXX_CXX_ABI=libstdc++ -DLLVM_TOOL_LIBCXXABI_BUILD=ON -DLLVM_EXTERNAL_LIBCXXABI_SOURCE_DIR=../libcxxabi -DLIBCXXABI_LIBCXX_PATH=../libcxx -DLIBCXXABI_LIBCXX_LIBRARY_PATH=/usr/local/lib ../llvm \
     && make -j"$(nproc)" \
     && make install \
-    && make install cxxabi cxx \
+    && make cxx && make install-libcxx && make install-libcxxabi \
     && cp ../libcxxabi/include/* /usr/local/include/c++/v1/. \
     && cd ../.. \
     && rm -rf llvm-project \
