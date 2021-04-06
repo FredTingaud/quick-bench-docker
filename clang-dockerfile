@@ -4,13 +4,15 @@ MAINTAINER Fred Tingaud <ftingaud@hotmail.com>
 
 USER root
 
+ENV DEBIAN_FRONTEND noninteractive
+
 ARG release
 
 ARG libstdcxx
 
 ARG unused_tools
 
-ENV DEBIAN_FRONTEND noninteractive
+ARG patches
 
 RUN apt-get update && apt-get -qy install \
    git \
@@ -45,12 +47,17 @@ RUN cd /usr/src/ \
 
 ENV CLANG_RELEASE $release
 
+COPY $patches /usr/src/patch-llvm/
+
 RUN cd /usr/src \
     && git clone --single-branch --branch $CLANG_RELEASE https://github.com/llvm/llvm-project.git \
     && cd llvm-project \
+    && find /usr/src/patch-llvm/ -type f -name '*.patch' -print0 | sort -z | xargs -0 -t -r -n 1 patch -p1 --forward -i \
+    && rm -rf /usr/src/patch-llvm \
     && mkdir build \
     && cd build \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;libcxx;libcxxabi;lld" ../llvm \
+    && if [ ! -f /usr/include/xlocale.h ] ; then ln -s /usr/include/locale.h /usr/include/xlocale.h ; else true ; fi \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;libcxx;libcxxabi;lld" -DCLANG_INCLUDE_DOCS=OFF -DCLANG_INCLUDE_TESTS=OFF -DCLANG_TOOLS_EXTRA_INCLUDE_DOCS=OFF -DCLANG_BUILD_TOOLS=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_DOCS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF -DLLVM_INCLUDE_UTILS=OFF -DLLVM_BUILD_TOOLS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_BUILD_TESTS=OFF ../llvm \
     && make -j"$(nproc)" \
     && make install \
     && make cxx \
