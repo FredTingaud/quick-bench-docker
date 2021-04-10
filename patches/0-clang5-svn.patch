@@ -42,3 +42,5 @@ index 81c2bab39ec..292f51e4259 100644
 -    set(LLVM_EXTERNAL_CLANG_TOOLS_EXTRA_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../clang-tools-extra")
 -  endif()
  endforeach()
+
+ # Build llvm with ccache if the package is present
