@@ -11,56 +11,56 @@
     "release": "llvmorg-10.0.1",
     "libstdcxx": "libstdc++-9-dev",
     "patches": "./patches/none",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify clang-offload-bundler llvm-jitlink clang-scan-deps"
+    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify clang-offload-bundler llvm-jitlink clang-scan-deps"
   },
   "clang-9.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-9.0.1",
     "libstdcxx": "libstdc++-8-dev",
     "patches": "./patches/none",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify clang-offload-bundler llvm-jitlink clang-scan-deps"
+    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify clang-offload-bundler llvm-jitlink clang-scan-deps"
   },
   "clang-8.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-8.0.1",
     "libstdcxx": "libstdc++-8-dev",
     "patches": "./patches/clang-extra-cmake.patch",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify clang-apply-replacements clang-change-namespace clang-include-fixer clang-offload-bundler clang-tidy clangd find-all-symbols clang-reorder-fields modularize"
+    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify clang-apply-replacements clang-change-namespace clang-include-fixer clang-offload-bundler clang-tidy clangd find-all-symbols clang-reorder-fields modularize"
   },
   "clang-7.1": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-7.1.0",
     "libstdcxx": "libstdc++-7-dev",
     "patches": "./patches/clang-extra-cmake.patch",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis clang-func-mapping llvm-cfi-verify"
+    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis clang-func-mapping llvm-cfi-verify"
   },
   "clang-7.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-7.0.1",
     "libstdcxx": "libstdc++-7-dev",
     "patches": "./patches/clang-extra-cmake.patch",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis clang-func-mapping llvm-cfi-verify"
+    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis clang-func-mapping llvm-cfi-verify"
   },
   "clang-6.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-6.0.1",
     "libstdcxx": "libstdc++-7-dev",
     "patches": "./patches/clang-extra-cmake.patch",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
+    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
   },
   "clang-5.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-5.0.2",
     "libstdcxx": "libstdc++-7-dev",
     "patches": "./patches/0-clang5-svn.patch",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
+    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
   },
   "clang-4.0": {
     "docker": "clang-ubuntu18-dockerfile",
     "release": "llvmorg-4.0.1",
     "libstdcxx": "libstdc++-6-dev",
     "patches": "./patches/?-clang?-svn.patch",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp clang-import-test lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
+    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
   },
   "clang-3.9": {
     "docker": "clang39-dockerfile"
