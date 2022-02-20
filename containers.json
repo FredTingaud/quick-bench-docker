@@ -1,66 +1,69 @@
 {
-  "clang-12.0": {
+  "clang-13.0": {
+    "docker": "clang-dockerfile-impish",
+    "release": "llvmorg-13.0.0",
+    "libstdcxx": "libstdc++-11-dev",
+    "patches": "./patches/none"
+   },
+   "clang-12.0": {
+    "docker": "clang-dockerfile-impish",
+    "release": "llvmorg-12.0.1",
+    "libstdcxx": "libstdc++-11-dev",
+    "patches": "./patches/none"
+   },
+   "clang-11.1": {
     "docker": "clang-dockerfile",
-    "release": "llvmorg-12.0.0",
+    "release": "llvmorg-11.1.0",
     "libstdcxx": "libstdc++-10-dev",
-    "patches": "./patches/none",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify clang-offload-bundler llvm-jitlink clang-scan-deps llvm-gsymutil llvm-ml llvm-profgen llvm-mca llvm-pdbutil llvm-xray sanstats llvm-cov"
+    "patches": "./patches/none"
    },
   "clang-11.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-11.0.1",
     "libstdcxx": "libstdc++-10-dev",
-    "patches": "./patches/none",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify clang-offload-bundler llvm-jitlink clang-scan-deps"
+    "patches": "./patches/none"
    },
   "clang-10.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-10.0.1",
     "libstdcxx": "libstdc++-9-dev",
-    "patches": "./patches/none",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify clang-offload-bundler llvm-jitlink clang-scan-deps"
+    "patches": "./patches/none"
   },
   "clang-9.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-9.0.1",
     "libstdcxx": "libstdc++-8-dev",
-    "patches": "./patches/none",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify clang-offload-bundler llvm-jitlink clang-scan-deps"
+    "patches": "./patches/none"
   },
   "clang-8.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-8.0.1",
     "libstdcxx": "libstdc++-8-dev",
-    "patches": "./patches/clang-extra-cmake.patch",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify clang-offload-bundler"
+    "patches": "./patches/clang-extra-cmake.patch"
   },
   "clang-7.1": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-7.1.0",
     "libstdcxx": "libstdc++-7-dev",
-    "patches": "./patches/clang-extra-cmake.patch",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify"
+    "patches": "./patches/clang-extra-cmake.patch"
   },
   "clang-7.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-7.0.1",
     "libstdcxx": "libstdc++-7-dev",
-    "patches": "./patches/clang-extra-cmake.patch",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld dsymutil llvm-exegesis llvm-cfi-verify"
+    "patches": "./patches/clang-extra-cmake.patch"
   },
   "clang-6.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-6.0.1",
     "libstdcxx": "libstdc++-7-dev",
-    "patches": "./patches/clang-extra-cmake.patch",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
+    "patches": "./patches/clang-extra-cmake.patch"
   },
   "clang-5.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-5.0.2",
     "libstdcxx": "libstdc++-7-dev",
-    "patches": "./patches/0-clang5-svn.patch",
-    "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
+    "patches": "./patches/0-clang5-svn.patch"
   },
   "clang-4.0": {
     "docker": "clang-ubuntu18-dockerfile",
@@ -75,6 +78,14 @@
   "clang-3.8": {
     "docker": "clang38-dockerfile"
   },
+  "gcc-11.2": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "11.2.0"
+  },
+  "gcc-11.1": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "11.1.0"
+  },
   "gcc-10.3": {
     "docker": "gcc-dockerfile",
     "GCC_VERSION": "10.3.0"
@@ -87,6 +98,10 @@
     "docker": "gcc-dockerfile",
     "GCC_VERSION": "10.1.0"
   },
+  "gcc-9.4": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "9.4.0"
+  },
   "gcc-9.3": {
     "docker": "gcc-dockerfile",
     "GCC_VERSION": "9.3.0"
@@ -98,6 +113,10 @@
   "gcc-9.1": {
     "docker": "gcc-dockerfile",
     "GCC_VERSION": "9.1.0"
+  },
+  "gcc-8.5": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "8.5.0"
   },
   "gcc-8.4": {
     "docker": "gcc-dockerfile",
