@@ -15,55 +15,64 @@
     "docker": "clang-dockerfile",
     "release": "llvmorg-11.1.0",
     "libstdcxx": "libstdc++-10-dev",
-    "patches": "./patches/none"
+    "patches": "./patches/none",
+    "headers": "install-clang-resource-headers"
    },
   "clang-11.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-11.0.1",
     "libstdcxx": "libstdc++-10-dev",
-    "patches": "./patches/none"
+    "patches": "./patches/none",
+    "headers": "install-clang-resource-headers"
    },
   "clang-10.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-10.0.1",
     "libstdcxx": "libstdc++-9-dev",
-    "patches": "./patches/none"
+    "patches": "./patches/none",
+    "headers": "install-clang-resource-headers"
   },
   "clang-9.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-9.0.1",
     "libstdcxx": "libstdc++-8-dev",
-    "patches": "./patches/none"
+    "patches": "./patches/none",
+    "headers": "install-clang-resource-headers"
   },
   "clang-8.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-8.0.1",
     "libstdcxx": "libstdc++-8-dev",
-    "patches": "./patches/clang-extra-cmake.patch"
+    "patches": "./patches/clang-extra-cmake.patch",
+    "headers": "install-clang-headers"
   },
   "clang-7.1": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-7.1.0",
     "libstdcxx": "libstdc++-7-dev",
-    "patches": "./patches/clang-extra-cmake.patch"
+    "patches": "./patches/clang-extra-cmake.patch",
+    "headers": "install-clang-headers"
   },
   "clang-7.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-7.0.1",
     "libstdcxx": "libstdc++-7-dev",
-    "patches": "./patches/clang-extra-cmake.patch"
+    "patches": "./patches/clang-extra-cmake.patch",
+    "headers": "install-clang-headers"
   },
   "clang-6.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-6.0.1",
     "libstdcxx": "libstdc++-7-dev",
-    "patches": "./patches/clang-extra-cmake.patch"
+    "patches": "./patches/clang-extra-cmake.patch",
+    "headers": "install-clang-headers"
   },
   "clang-5.0": {
     "docker": "clang-dockerfile",
     "release": "llvmorg-5.0.2",
     "libstdcxx": "libstdc++-7-dev",
-    "patches": "./patches/0-clang5-svn.patch"
+    "patches": "./patches/0-clang5-svn.patch",
+    "headers": "install-clang-headers"
   },
   "clang-4.0": {
     "docker": "clang-ubuntu18-dockerfile",
