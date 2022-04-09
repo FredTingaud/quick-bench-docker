@@ -25,7 +25,7 @@ def testTarget(target):
    res = subprocess.run(["npm", "run", "system-test"], cwd="../quick-bench-back-end", env=env)
    return res.returncode
 
-def treatTarget(target, force):
+def treatTarget(target, force, notest):
    params = data[target]
    dockerfile = params.pop("docker")
    command = ["docker", "build", "-t", f"fredtingaud/quick-bench:{target}", "-f", f"{dockerfile}"]
@@ -37,7 +37,11 @@ def treatTarget(target, force):
    if res.returncode != 0:
       return res.returncode
    else:
-      return testTarget(target)
+      if not notest:
+        pretty(f"Testing Docker Container for {target}")
+        return testTarget(target)
+      else:
+        return 0
 
 def main():
    parser = argparse.ArgumentParser()
@@ -45,6 +49,7 @@ def main():
    parser.add_argument("-f", "--force", help="build without cache", action="store_true")
    parser.add_argument("-s", "--skip", nargs="*", default=[], help="build all containers except the passed ones")
    parser.add_argument("-p", "--push", help="push the result to docker-hub", action="store_true")
+   parser.add_argument("-n", "--notest", help="do not test", action="store_true")
 
    targetGroups = parser.add_mutually_exclusive_group(required=True)
    targetGroups.add_argument("target", help="a given container to build", nargs='*', default=[])
@@ -65,7 +70,7 @@ def main():
 
    filtered = set(targets).difference(set(args.skip))
    for target in filtered:
-      retcode = treatTarget(target, args.force)
+      retcode = treatTarget(target, args.force, args.notest)
       if retcode == 0:
          pretty(f"Container successfully built for {target}")
          if args.push:
