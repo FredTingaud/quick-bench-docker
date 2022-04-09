@@ -1,4 +1,9 @@
+# Make sure that there is an ASM_FORMAT no matter
+# how we were called.
+if [ "${ASM_FORMAT}" == "" ]; then
+	ASM_FORMAT="att"
+fi
 while read line ;
 do echo "----------- $line" >> bench.perf
-perf annotate --stdio $line >> bench.perf ;
+perf annotate -M${ASM_FORMAT} --stdio $line >> bench.perf ;
 done <bench.func
