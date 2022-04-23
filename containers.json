@@ -87,6 +87,10 @@
   "clang-3.8": {
     "docker": "clang38-dockerfile"
   },
+  "gcc-11.3": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "11.3.0"
+  },
   "gcc-11.2": {
     "docker": "gcc-dockerfile",
     "GCC_VERSION": "11.2.0"
