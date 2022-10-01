@@ -96,6 +96,8 @@ COPY ./time /home/builder/time-build
 
 COPY ./prebuild /home/builder/prebuild
 
+COPY ./gcc-about-me /home/builder/about-me
+
 USER builder
 
 WORKDIR /home/builder

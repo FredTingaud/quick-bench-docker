@@ -112,6 +112,8 @@ COPY ./prebuild /home/builder/prebuild
 
 COPY ./prebuild-libcxx /home/builder/prebuild-libcxx
 
+COPY ./clang-about-me /home/builder/about-me
+
 USER builder
 
 WORKDIR /home/builder

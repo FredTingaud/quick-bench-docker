@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 MAINTAINER Fred Tingaud <ftingaud@hotmail.com>
 
@@ -11,8 +11,6 @@ ARG release
 ARG libstdcxx
 
 ARG patches
-
-ARG headers
 
 RUN apt-get update && apt-get -qy install \
    git \
@@ -38,7 +36,7 @@ ENV CC gcc
 ENV CXX g++
 
 RUN cd /usr/src/ \
-    && git clone --single-branch --branch v5.6 https://github.com/torvalds/linux.git \
+    && git clone --single-branch --branch v5.16 https://github.com/torvalds/linux.git \
     && cd linux/tools/perf \
     && make -j"$(nproc)" \
     && cp perf /usr/bin \
@@ -58,7 +56,7 @@ RUN cd /usr/src \
     && cd build \
     && if [ ! -f /usr/include/xlocale.h ] ; then ln -s /usr/include/locale.h /usr/include/xlocale.h ; else true ; fi \
     && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;libcxx;libcxxabi;lld" -DLLVM_TARGETS_TO_BUILD=X86 -DCLANG_INCLUDE_DOCS=OFF -DCLANG_INCLUDE_TESTS=OFF -DCLANG_ENABLE_STATIC_ANALYZER=OFF -DCLANG_ENABLE_ARCMT=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_DOCS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF -DLLVM_INCLUDE_UTILS=OFF -DLLVM_BUILD_TESTS=OFF ../llvm \
-    && make -j"$(nproc)" install-clang install-lld install-cxx install-cxxabi install-llvm-ar install-llvm-nm install-llvm-ranlib llvm-config ${headers} \
+    && make -j"$(nproc)" install-clang install-lld install-cxx install-cxxabi install-llvm-ar install-llvm-nm install-llvm-ranlib llvm-config install-clang-resource-headers \
     && cp ../libcxxabi/include/* /usr/local/include/c++/v1/. \
     && cd ../.. \
     && rm -rf llvm-project \

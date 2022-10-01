@@ -1,0 +1,7 @@
+#! /bin/bash
+
+echo "[version]"
+echo "1"
+
+echo "[std]"
+gcc --help -v 2>/dev/null | grep "\-std=c++" | grep -v Deprecated | grep -v "c++98" | grep -v "Same as" | grep -Eo 'c\+\+[0-9a-z]+'

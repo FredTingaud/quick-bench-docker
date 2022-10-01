@@ -1,12 +1,12 @@
 {
   "clang-13.0": {
-    "docker": "clang-dockerfile-impish",
+    "docker": "clang-dockerfile-jellyfish",
     "release": "llvmorg-13.0.0",
     "libstdcxx": "libstdc++-11-dev",
     "patches": "./patches/none"
    },
    "clang-12.0": {
-    "docker": "clang-dockerfile-impish",
+    "docker": "clang-dockerfile-jellyfish",
     "release": "llvmorg-12.0.1",
     "libstdcxx": "libstdc++-11-dev",
     "patches": "./patches/none"

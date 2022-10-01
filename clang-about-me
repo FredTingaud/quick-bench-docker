@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "[version]"
+echo "1"
+
+echo "[std]"
+clang++ -std=test -xc++ build |& grep 'c++' | grep -v 98 | grep -Eo "c\+\+[0-9a-z]+"
