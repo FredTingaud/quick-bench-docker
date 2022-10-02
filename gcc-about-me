@@ -1,5 +1,7 @@
 #! /bin/bash
 
+stty cols 200
+
 echo "[version]"
 echo "1"
 
