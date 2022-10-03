@@ -69,10 +69,10 @@ RUN cd /usr/src/ \
     && git clone --single-branch --branch v1.6.1 https://github.com/google/benchmark.git \
     && mkdir -p /usr/src/benchmark/build/ \
     && cd /usr/src/benchmark/build/ \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DBENCHMARK_ENABLE_TESTING=OFF -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
     && make -j"$(nproc)" \
     && make install \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++" -DCMAKE_EXE_LINKER_FLAGS="-lc++abi" -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
+    && cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true -DBENCHMARK_ENABLE_GTEST_TESTS=OFF -DBENCHMARK_ENABLE_TESTING=OFF -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++" -DCMAKE_EXE_LINKER_FLAGS="-lc++abi" -DRUN_HAVE_STD_REGEX=0 -DRUN_HAVE_POSIX_REGEX=0 .. \
     && make clean all -j"$(nproc)" \
     && cp src/libbenchmark.a /usr/local/lib/libbenchmark-cxx.a
 
