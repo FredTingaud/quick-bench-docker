@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "[version]"
+echo "1"
+
+echo "[std]"
+echo "c++11"
+echo "c++14"
+echo "c++1z"
