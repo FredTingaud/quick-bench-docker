@@ -1,7 +1,13 @@
 {
+  "clang-16.0": {
+    "docker": "clang-dockerfile-jellyfish",
+    "release": "llvmorg-16.0.0",
+    "libstdcxx": "libstdc++-12-dev",
+    "patches": "./patches/none"
+   },
   "clang-15.0": {
     "docker": "clang-dockerfile-jellyfish",
-    "release": "llvmorg-15.0.1",
+    "release": "llvmorg-15.0.7",
     "libstdcxx": "libstdc++-12-dev",
     "patches": "./patches/none"
    },
@@ -98,6 +104,10 @@
   },
   "clang-3.8": {
     "docker": "clang38-dockerfile"
+  },
+  "gcc-13.1": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "13.1.0"
   },
   "gcc-12.2": {
     "docker": "gcc-dockerfile",
