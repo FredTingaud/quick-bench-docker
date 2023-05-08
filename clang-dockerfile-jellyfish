@@ -55,9 +55,8 @@ RUN cd /usr/src \
     && mkdir build \
     && cd build \
     && if [ ! -f /usr/include/xlocale.h ] ; then ln -s /usr/include/locale.h /usr/include/xlocale.h ; else true ; fi \
-    && cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;libcxx;libcxxabi;lld" -DLLVM_TARGETS_TO_BUILD=X86 -DCLANG_INCLUDE_DOCS=OFF -DCLANG_INCLUDE_TESTS=OFF -DCLANG_ENABLE_STATIC_ANALYZER=OFF -DCLANG_ENABLE_ARCMT=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_DOCS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF -DLLVM_INCLUDE_UTILS=OFF -DLLVM_BUILD_TESTS=OFF ../llvm \
-    && make -j"$(nproc)" install-clang install-lld install-cxx install-cxxabi install-llvm-ar install-llvm-nm install-llvm-ranlib llvm-config install-clang-resource-headers \
-    && cp ../libcxxabi/include/* /usr/local/include/c++/v1/. \
+    && cmake -S llvm -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_PROJECTS="clang;lld" -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" -DLLVM_RUNTIME_TARGETS=x86_64-unknown-linux-gnu -DCLANG_INCLUDE_DOCS=OFF -DCLANG_INCLUDE_TESTS=OFF -DCLANG_ENABLE_STATIC_ANALYZER=OFF -DCLANG_ENABLE_ARCMT=OFF -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_DOCS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLIBCXX_INCLUDE_BENCHMARKS=OFF -DLLVM_INCLUDE_UTILS=OFF -DLLVM_BUILD_TESTS=OFF ../llvm \
+    && make -j"$(nproc)" install-clang install-lld install-llvm-ar install-llvm-nm install-llvm-ranlib llvm-config install-clang-resource-headers install-runtimes \
     && cd ../.. \
     && rm -rf llvm-project \
     && cd /usr/local/bin
