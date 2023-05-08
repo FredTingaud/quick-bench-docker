@@ -1,0 +1,3 @@
+-fexperimental-library
+-fexperimental-new-constant-interpreter
+-fexperimental-strict-floating-point

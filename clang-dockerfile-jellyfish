@@ -118,6 +118,8 @@ COPY ./prebuild-libcxx /home/builder/prebuild-libcxx
 
 COPY ./clang-about-me /home/builder/about-me
 
+COPY ./clang-experimental-flags /home/builder/experimental-flags
+
 USER builder
 
 WORKDIR /home/builder
