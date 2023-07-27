@@ -105,6 +105,8 @@ COPY ./prebuild /home/builder/prebuild
 
 COPY ./gcc-about-me /home/builder/about-me
 
+COPY ./gcc-experimental-flags /home/builder/experimental-flags
+
 USER builder
 
 WORKDIR /home/builder
