@@ -9,4 +9,4 @@ echo "[std]"
 g++ --help -v 2>/dev/null | grep "^  \-std=c++" | grep -v Deprecated | grep -v "c++98" | grep -v "c++03" | grep -v "Same as" | grep -v "Deprecated" | grep -Eo 'c\+\+[0-9a-z]+'
 
 echo "[experimental]"
-g++ --help -v | grep -oFwf experimental-flags
+g++ --help -v 2>/dev/null | ( grep -oFwf experimental-flags || [ "$?" == "1" ] )
