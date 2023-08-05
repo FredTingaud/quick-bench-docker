@@ -105,9 +105,17 @@
   "clang-3.8": {
     "docker": "clang38-dockerfile"
   },
+  "gcc-13.2": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "13.2.0"
+  },
   "gcc-13.1": {
     "docker": "gcc-dockerfile",
     "GCC_VERSION": "13.1.0"
+  },
+  "gcc-12.3": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "12.3.0"
   },
   "gcc-12.2": {
     "docker": "gcc-dockerfile",
@@ -116,6 +124,10 @@
   "gcc-12.1": {
     "docker": "gcc-dockerfile",
     "GCC_VERSION": "12.1.0"
+  },
+  "gcc-11.4": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "11.4.0"
   },
   "gcc-11.3": {
     "docker": "gcc-dockerfile",
@@ -128,6 +140,10 @@
   "gcc-11.1": {
     "docker": "gcc-dockerfile",
     "GCC_VERSION": "11.1.0"
+  },
+  "gcc-10.5": {
+    "docker": "gcc-dockerfile",
+    "GCC_VERSION": "10.5.0"
   },
   "gcc-10.4": {
     "docker": "gcc-dockerfile",
