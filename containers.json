@@ -1,232 +1,232 @@
 {
   "clang-16.0": {
-    "docker": "clang-dockerfile-jellyfish",
+    "docker": "dockerfiles/clang-dockerfile-jellyfish",
     "release": "llvmorg-16.0.0",
     "libstdcxx": "libstdc++-12-dev",
     "patches": "./patches/none"
    },
   "clang-15.0": {
-    "docker": "clang-dockerfile-jellyfish",
+    "docker": "dockerfiles/clang-dockerfile-jellyfish",
     "release": "llvmorg-15.0.7",
     "libstdcxx": "libstdc++-12-dev",
     "patches": "./patches/none"
    },
    "clang-14.0": {
-     "docker": "clang-dockerfile-jellyfish",
+     "docker": "dockerfiles/clang-dockerfile-jellyfish",
      "release": "llvmorg-14.0.6",
      "libstdcxx": "libstdc++-11-dev",
      "patches": "./patches/none"
     },
     "clang-13.0": {
-    "docker": "clang-dockerfile-jellyfish",
+    "docker": "dockerfiles/clang-dockerfile-jellyfish",
     "release": "llvmorg-13.0.1",
     "libstdcxx": "libstdc++-11-dev",
     "patches": "./patches/none"
    },
    "clang-12.0": {
-    "docker": "clang-dockerfile-jellyfish",
+    "docker": "dockerfiles/clang-dockerfile-jellyfish",
     "release": "llvmorg-12.0.1",
     "libstdcxx": "libstdc++-11-dev",
     "patches": "./patches/none"
    },
    "clang-11.1": {
-    "docker": "clang-dockerfile",
+    "docker": "dockerfiles/clang-dockerfile",
     "release": "llvmorg-11.1.0",
     "libstdcxx": "libstdc++-10-dev",
     "patches": "./patches/none",
     "headers": "install-clang-resource-headers"
    },
   "clang-11.0": {
-    "docker": "clang-dockerfile",
+    "docker": "dockerfiles/clang-dockerfile",
     "release": "llvmorg-11.0.1",
     "libstdcxx": "libstdc++-10-dev",
     "patches": "./patches/none",
     "headers": "install-clang-resource-headers"
    },
   "clang-10.0": {
-    "docker": "clang-dockerfile",
+    "docker": "dockerfiles/clang-dockerfile",
     "release": "llvmorg-10.0.1",
     "libstdcxx": "libstdc++-9-dev",
     "patches": "./patches/none",
     "headers": "install-clang-resource-headers"
   },
   "clang-9.0": {
-    "docker": "clang-dockerfile",
+    "docker": "dockerfiles/clang-dockerfile",
     "release": "llvmorg-9.0.1",
     "libstdcxx": "libstdc++-8-dev",
     "patches": "./patches/none",
     "headers": "install-clang-resource-headers"
   },
   "clang-8.0": {
-    "docker": "clang-dockerfile",
+    "docker": "dockerfiles/clang-dockerfile",
     "release": "llvmorg-8.0.1",
     "libstdcxx": "libstdc++-8-dev",
     "patches": "./patches/clang-extra-cmake.patch",
     "headers": "install-clang-headers"
   },
   "clang-7.1": {
-    "docker": "clang-dockerfile",
+    "docker": "dockerfiles/clang-dockerfile",
     "release": "llvmorg-7.1.0",
     "libstdcxx": "libstdc++-7-dev",
     "patches": "./patches/clang-extra-cmake.patch",
     "headers": "install-clang-headers"
   },
   "clang-7.0": {
-    "docker": "clang-dockerfile",
+    "docker": "dockerfiles/clang-dockerfile",
     "release": "llvmorg-7.0.1",
     "libstdcxx": "libstdc++-7-dev",
     "patches": "./patches/clang-extra-cmake.patch",
     "headers": "install-clang-headers"
   },
   "clang-6.0": {
-    "docker": "clang-dockerfile",
+    "docker": "dockerfiles/clang-dockerfile",
     "release": "llvmorg-6.0.1",
     "libstdcxx": "libstdc++-7-dev",
     "patches": "./patches/clang-extra-cmake.patch",
     "headers": "install-clang-headers"
   },
   "clang-5.0": {
-    "docker": "clang-dockerfile",
+    "docker": "dockerfiles/clang-dockerfile",
     "release": "llvmorg-5.0.2",
     "libstdcxx": "libstdc++-7-dev",
     "patches": "./patches/0-clang5-svn.patch",
     "headers": "install-clang-headers"
   },
   "clang-4.0": {
-    "docker": "clang-ubuntu18-dockerfile",
+    "docker": "dockerfiles/clang-ubuntu18-dockerfile",
     "release": "llvmorg-4.0.1",
     "libstdcxx": "libstdc++-6-dev",
     "patches": "./patches/?-clang?-svn.patch",
     "unused_tools": "opt llvm-lto2 llvm-lto llc llvm-c-test llvm-dsymutil llvm-dwp lli c-index-test bugpoint llvm-mc llvm-objdump sancov llvm-rtdyld"
   },
   "clang-3.9": {
-    "docker": "clang39-dockerfile"
+    "docker": "dockerfiles/clang39-dockerfile"
   },
   "clang-3.8": {
-    "docker": "clang38-dockerfile"
+    "docker": "dockerfiles/clang38-dockerfile"
   },
   "gcc-13.2": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "13.2.0"
   },
   "gcc-13.1": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "13.1.0"
   },
   "gcc-12.3": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "12.3.0"
   },
   "gcc-12.2": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "12.2.0"
   },
   "gcc-12.1": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "12.1.0"
   },
   "gcc-11.4": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "11.4.0"
   },
   "gcc-11.3": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "11.3.0"
   },
   "gcc-11.2": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "11.2.0"
   },
   "gcc-11.1": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "11.1.0"
   },
   "gcc-10.5": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "10.5.0"
   },
   "gcc-10.4": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "10.4.0"
   },
   "gcc-10.3": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "10.3.0"
   },
   "gcc-10.2": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "10.2.0"
   },
   "gcc-10.1": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "10.1.0"
   },
   "gcc-9.5": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "9.5.0"
   },
   "gcc-9.4": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "9.4.0"
   },
   "gcc-9.3": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "9.3.0"
   },
   "gcc-9.2": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "9.2.0"
   },
   "gcc-9.1": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "9.1.0"
   },
   "gcc-8.5": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "8.5.0"
   },
   "gcc-8.4": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "8.4.0"
   },
   "gcc-8.3": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "8.3.0"
   },
   "gcc-8.2": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "8.2.0"
   },
   "gcc-8.1": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "8.1.0"
   },
   "gcc-7.5": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "7.5.0"
   },
   "gcc-7.4": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "7.4.0"
   },
   "gcc-7.3": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "7.3.0"
   },
   "gcc-7.2": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "7.2.0"
   },
   "gcc-6.5": {
-    "docker": "gcc-dockerfile",
+    "docker": "dockerfiles/gcc-dockerfile",
     "GCC_VERSION": "6.5.0"
   },
   "gcc-6.4": {
-    "docker": "gcc64-dockerfile",
+    "docker": "dockerfiles/gcc64-dockerfile",
     "GCC_VERSION": "6.4.0"
   },
   "gcc-5.5": {
-    "docker": "gcc55-dockerfile",
+    "docker": "dockerfiles/gcc55-dockerfile",
     "GCC_VERSION": "5.5.0"
   }
 }
