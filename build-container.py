@@ -14,18 +14,18 @@ def concat(x, key, val):
    x.extend(["--build-arg", f"{key}={val}"])
    return x
 
-def pushTarget(target):
+def push_target(target):
    pretty(f"Pushing {target} to Docker Hub")
    subprocess.run(["docker", "push", f"fredtingaud/quick-bench:{target}"])
 
-def testTarget(target):
+def test_target(target):
    pretty(f"Testing {target}")
    env = os.environ.copy()
    env["QB_VERSION"] = target
    res = subprocess.run(["npm", "run", "system-test"], cwd="../quick-bench-back-end", env=env)
    return res.returncode
 
-def treatTarget(target, force, notest):
+def treat_target(target, force, notest):
    params = data[target]
    dockerfile = params.pop("docker")
    command = ["docker", "build", "-t", f"fredtingaud/quick-bench:{target}", "-f", f"{dockerfile}"]
@@ -37,11 +37,11 @@ def treatTarget(target, force, notest):
    if res.returncode != 0:
       return res.returncode
    else:
-      if not notest:
-        pretty(f"Testing Docker Container for {target}")
-        return testTarget(target)
-      else:
+      if notest:
         return 0
+      else:
+        pretty(f"Testing Docker Container for {target}")
+        return test_target(target)
 
 def main():
    parser = argparse.ArgumentParser()
@@ -49,13 +49,13 @@ def main():
    parser.add_argument("-f", "--force", help="build without cache", action="store_true")
    parser.add_argument("-s", "--skip", nargs="*", default=[], help="build all containers except the passed ones")
    parser.add_argument("-p", "--push", help="push the result to docker-hub", action="store_true")
-   parser.add_argument("-n", "--notest", help="do not test", action="store_true")
+   parser.add_argument("-n", "--notest", help="skip the tests", action="store_true")
 
-   targetGroups = parser.add_mutually_exclusive_group(required=True)
-   targetGroups.add_argument("target", help="a given container to build", nargs='*', default=[])
-   targetGroups.add_argument("-a", "--all", help="build all the containers", action="store_true")
-   targetGroups.add_argument("--clang", help="build all clang containers", action="store_true")
-   targetGroups.add_argument("--gcc", help="build all gcc containers", action="store_true")
+   target_groups = parser.add_mutually_exclusive_group(required=True)
+   target_groups.add_argument("target", help="a given container to build", nargs='*', default=[])
+   target_groups.add_argument("-a", "--all", help="build all the containers", action="store_true")
+   target_groups.add_argument("--clang", help="build all clang containers", action="store_true")
+   target_groups.add_argument("--gcc", help="build all gcc containers", action="store_true")
 
    args = parser.parse_args()
 
@@ -70,11 +70,11 @@ def main():
 
    filtered = set(targets).difference(set(args.skip))
    for target in filtered:
-      retcode = treatTarget(target, args.force, args.notest)
+      retcode = treat_target(target, args.force, args.notest)
       if retcode == 0:
          pretty(f"Container successfully built for {target}")
          if args.push:
-            pushTarget(target)
+            push_target(target)
       else:
          pretty(f"Container couldn't be built for {target} - retcode={retcode}")
 
