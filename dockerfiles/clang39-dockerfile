@@ -39,7 +39,7 @@ RUN cd /usr/src/ \
 
 ENV CLANG_RELEASE llvmorg-3.9.1
 
-COPY commands/patches/0-clang39.patch /usr/src/patch-llvm/
+COPY patches/0-clang39.patch /usr/src/patch-llvm/
 
 RUN cd /usr/src \
     && git clone --single-branch --branch $CLANG_RELEASE https://github.com/llvm/llvm-project.git \
